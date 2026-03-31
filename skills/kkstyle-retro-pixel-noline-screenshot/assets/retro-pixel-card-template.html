@@ -1,0 +1,622 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KKStyle Retro Pixel No-Line Template</title>
+    <style>
+      :root {
+        --edge: rgba(50, 54, 61, 0.04);
+        --shadow-soft: rgba(69, 208, 255, 0.14);
+        --canvas-width: 1500px;
+        --canvas-height: 2000px;
+        --bg: #0f1730;
+        --bg-2: #121d39;
+        --panel: #f4fbff;
+        --panel-soft: #dff5ff;
+        --ink: #32363d;
+        --cyan: #45d0ff;
+        --mint: #6ef2c0;
+        --yellow: #ffe45b;
+        --orange: #ff7a59;
+        --outline: 1px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--bg);
+      }
+
+      body {
+        font-family: "Trebuchet MS", "Noto Sans SC", "PingFang SC", sans-serif;
+      }
+
+      .frame {
+        position: relative;
+        width: var(--canvas-width);
+        height: var(--canvas-height);
+        overflow: hidden;
+        background:
+          linear-gradient(rgba(69, 208, 255, 0.14) 2px, transparent 2px),
+          linear-gradient(90deg, rgba(69, 208, 255, 0.12) 2px, transparent 2px),
+          radial-gradient(circle at 20% 18%, rgba(110, 242, 192, 0.18), transparent 22%),
+          radial-gradient(circle at 82% 16%, rgba(255, 228, 91, 0.12), transparent 18%),
+          linear-gradient(180deg, var(--bg-2), var(--bg));
+        background-size: 48px 48px, 48px 48px, auto, auto, auto;
+      }
+
+      .pixel-corner {
+        position: absolute;
+        display: grid;
+        grid-template-columns: repeat(5, 28px);
+        gap: 6px;
+      }
+
+      .pixel-corner span {
+        width: 28px;
+        height: 28px;
+        background: rgba(110, 242, 192, 0.38);
+      }
+
+      .pixel-corner.top-left {
+        top: 34px;
+        left: 34px;
+      }
+
+      .pixel-corner.bottom-right {
+        right: 34px;
+        bottom: 34px;
+      }
+
+      .shell {
+        position: absolute;
+        inset: 118px 70px 70px;
+        border: var(--outline) solid var(--edge);
+        background: rgba(244, 251, 255, 0.96);
+        box-shadow: 0 0 0 12px rgba(69, 208, 255, 0.18);
+      }
+
+      .hud-bar {
+        position: absolute;
+        top: 34px;
+        left: 70px;
+        right: 70px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 6;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        min-height: 52px;
+        padding: 0 18px;
+        border: var(--outline) solid var(--edge);
+        background: var(--mint);
+        color: var(--ink);
+        font-size: 24px;
+        font-weight: 900;
+        letter-spacing: 0.06em;
+      }
+
+      .brand::before {
+        content: "";
+        width: 16px;
+        height: 16px;
+        background: var(--ink);
+      }
+
+      .date-chip {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 258px;
+        height: 72px;
+        padding: 0 20px;
+        border: var(--outline) solid var(--edge);
+        background: var(--yellow);
+        color: var(--ink);
+        font-size: 26px;
+        font-weight: 900;
+        letter-spacing: 0.01em;
+        box-shadow: 10px 10px 0 rgba(69, 208, 255, 0.42);
+      }
+
+      .date-chip::before {
+        content: "";
+        width: 18px;
+        height: 18px;
+        margin-right: 14px;
+        background: var(--orange);
+        border: 1px solid var(--edge);
+        flex: 0 0 auto;
+      }
+
+      .content {
+        position: absolute;
+        inset: 116px 40px 40px;
+        display: grid;
+        grid-template-rows: auto auto auto 1fr auto auto;
+        gap: 20px;
+      }
+
+      .tag-row {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 42px;
+        padding: 0 16px;
+        border: var(--outline) solid var(--edge);
+        color: var(--ink);
+        font-size: 20px;
+        font-weight: 900;
+      }
+
+      .tag.cyan {
+        background: var(--cyan);
+      }
+
+      .tag.mint {
+        background: var(--mint);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1fr 280px;
+        gap: 18px;
+        align-items: start;
+      }
+
+      .title-box {
+        padding: 24px 24px 18px;
+        border: var(--outline) solid var(--edge);
+        background: #ffffff;
+        box-shadow: 14px 14px 0 rgba(69, 208, 255, 0.24);
+      }
+
+      .title {
+        margin: 0;
+        color: var(--ink);
+        font-size: 88px;
+        line-height: 0.98;
+        letter-spacing: -0.04em;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .status-card {
+        padding: 18px 18px 16px;
+        border: var(--outline) solid var(--edge);
+        background: #fff;
+        box-shadow: 14px 14px 0 rgba(255, 122, 89, 0.42);
+        display: grid;
+        gap: 8px;
+      }
+
+      .status-card .mini {
+        color: var(--orange);
+        font-size: 24px;
+        line-height: 1;
+        font-weight: 900;
+      }
+
+      .status-card .num {
+        display: block;
+        color: var(--ink);
+        font-size: 96px;
+        line-height: 0.9;
+        font-weight: 900;
+      }
+
+      .status-card .label {
+        display: block;
+        font-size: 28px;
+        font-weight: 900;
+      }
+
+      .status-card .sub {
+        font-size: 19px;
+        line-height: 1.26;
+        font-weight: 700;
+      }
+
+      .status-card .foot {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 38px;
+        padding: 6px 12px;
+        border: 1px solid var(--edge);
+        background: var(--panel-soft);
+        font-size: 18px;
+        font-weight: 900;
+      }
+
+      .summary-box {
+        padding: 16px 20px;
+        border: var(--outline) solid var(--edge);
+        background: var(--panel-soft);
+        color: var(--ink);
+        font-size: 29px;
+        line-height: 1.36;
+        box-shadow: 10px 10px 0 rgba(110, 242, 192, 0.22);
+      }
+
+      .main-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+
+      .panel {
+        padding: 18px 18px 16px;
+        border: var(--outline) solid var(--edge);
+        background: #fff;
+        display: grid;
+        grid-template-rows: auto auto 1fr auto;
+        gap: 12px;
+      }
+
+      .panel h2,
+      .panel p {
+        margin: 0;
+      }
+
+      .panel h2 {
+        color: var(--ink);
+        font-size: 34px;
+        line-height: 1;
+        font-weight: 900;
+      }
+
+      .panel p {
+        color: var(--ink);
+        font-size: 23px;
+        line-height: 1.42;
+      }
+
+      .score-line {
+        display: flex;
+        align-items: flex-end;
+        gap: 12px;
+        margin-bottom: 6px;
+      }
+
+      .score-line strong {
+        font-size: 76px;
+        line-height: 0.9;
+        font-weight: 900;
+      }
+
+      .score-line span {
+        font-size: 27px;
+        font-weight: 800;
+      }
+
+      .block-list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .block {
+        padding: 14px 16px;
+        border: var(--outline) solid var(--edge);
+      }
+
+      .block strong {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 22px;
+        line-height: 1.1;
+        font-weight: 900;
+      }
+
+      .block span {
+        display: block;
+        font-size: 19px;
+        line-height: 1.34;
+        font-weight: 700;
+      }
+
+      .block.cyan {
+        background: var(--panel-soft);
+      }
+
+      .block.mint {
+        background: #e9fff5;
+      }
+
+      .block.yellow {
+        background: #fff8d2;
+      }
+
+      .feature-band {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+      }
+
+      .feature {
+        min-height: 78px;
+        padding: 12px 14px;
+        border: var(--outline) solid var(--edge);
+        display: grid;
+        align-content: center;
+        gap: 4px;
+      }
+
+      .feature strong {
+        display: block;
+        font-size: 21px;
+        line-height: 1;
+        font-weight: 900;
+      }
+
+      .feature span {
+        display: block;
+        font-size: 18px;
+        line-height: 1.22;
+        font-weight: 700;
+      }
+
+      .feature.cyan {
+        background: var(--panel-soft);
+      }
+
+      .feature.mint {
+        background: #e9fff5;
+      }
+
+      .feature.yellow {
+        background: #fff8d2;
+      }
+
+      .footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 18px;
+        align-items: flex-end;
+      }
+
+      .footer-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        flex: 1 1 auto;
+        transform: translateY(-28px);
+      }
+
+      .footer-note {
+        padding: 10px 14px;
+        border: var(--outline) solid var(--edge);
+        background: #fff;
+        color: var(--ink);
+        font-size: 18px;
+        font-weight: 700;
+      }
+
+      .contact-cluster {
+        display: flex;
+        align-items: flex-end;
+        gap: 18px;
+        transform: translate(-4px, -12px);
+        position: relative;
+        z-index: 8;
+      }
+
+      .code-slot,
+      .ip-slot {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .code-slot {
+        transform: translateY(-12px);
+      }
+
+      .ip-slot {
+        transform: translate(-2px, -14px);
+      }
+
+      .code-card,
+      .ip-card {
+        width: 168px;
+        height: 168px;
+        overflow: hidden;
+        border: var(--outline) solid var(--edge);
+        background: #fff;
+      }
+
+      .code-card {
+        box-shadow: 12px 12px 0 rgba(69, 208, 255, 0.34);
+      }
+
+      .ip-card {
+        box-shadow: 12px 12px 0 rgba(255, 122, 89, 0.28);
+      }
+
+      .code-card img,
+      .ip-card img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .ip-card img {
+        object-position: center top;
+      }
+
+      .slot-caption {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 156px;
+        height: 42px;
+        padding: 0 14px;
+        border: 1px solid var(--edge);
+        background: #fff;
+        color: var(--ink);
+        font-size: 18px;
+        font-weight: 900;
+      }
+
+      .slot-caption.code {
+        transform: translateX(8px);
+      }
+          /* no-line softness */
+      .frame :is(.shell, .sheet, .board, .panel, .card, .feature, .feature-card, .metric-card, .summary, .summary-strip, .summary-bubble, .footer-note, .footer-tag, .date-chip, .tag, .subject, .brand, .brand-sub, .mini-tag, .panel-badge, .node, .step-body, .step-label, .code-card, .ip-card, .slot-caption, .lead-note, .note-card, .info-card, .support-card) {
+        box-shadow: 0 16px 32px var(--shadow-soft);
+      }
+      .frame :is(.title, h1, h2, h3, strong, .num, .big-number) {
+        text-shadow: 0 2px 0 rgba(255,255,255,0.22);
+      }
+      .frame :is(.connector, .steps::before, .margin-line, .border, .pixel-grid, .pixel-band span, .pixel-corner span) {
+        opacity: 0.34;
+      }
+</style>
+  </head>
+  <body>
+    <main class="frame">
+      <div class="pixel-corner top-left">
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+
+      <div class="pixel-corner bottom-right">
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+
+      <section class="shell">
+        <header class="hud-bar">
+          <span class="brand">RETRO PIXEL</span>
+          <span class="date-chip">2026年03月26日</span>
+        </header>
+
+        <div class="content">
+          <div class="tag-row">
+            <span class="tag cyan">STATUS BOARD</span>
+            <span class="tag mint">3:4 MODE</span>
+          </div>
+
+          <section class="hero">
+            <div class="title-box">
+              <h1 class="title">把重点做成<br />像素状态海报</h1>
+            </div>
+
+            <div class="status-card">
+              <span class="mini">MODE</span>
+              <span class="num">3:4</span>
+              <span class="label">复古掌机风</span>
+              <span class="sub">适合项目推荐、课程整理、资源摘要和工具分享海报。</span>
+              <span class="foot">PIXEL UI</span>
+            </div>
+          </section>
+
+          <p class="summary-box">
+            这套风格把信息做得像一块掌机状态板：大标题、HUD 信息牌、分块面板和状态条都很明确，
+            很适合做“有游戏感”的信息海报。
+          </p>
+
+          <section class="main-grid">
+            <section class="panel">
+              <h2>主信息面板</h2>
+              <div class="score-line">
+                <strong>先看核心</strong>
+                <span>再读细节</span>
+              </div>
+              <div class="block-list">
+                <div class="block cyan">
+                  <strong>标题像游戏封面</strong>
+                  <span>主标题要够粗、够短、够有状态，不要像普通正文标题。</span>
+                </div>
+                <div class="block mint">
+                  <strong>摘要像 HUD 说明</strong>
+                  <span>先讲“是什么”和“为什么值得看”，再展开详细信息。</span>
+                </div>
+                <div class="block yellow">
+                  <strong>重点牌负责爆点</strong>
+                  <span>数字、时长、等级、完成度或一句关键结论都适合放右上。</span>
+                </div>
+              </div>
+            </section>
+
+            <section class="panel">
+              <h2>辅助信息面板</h2>
+              <div class="block-list">
+                <div class="block cyan">
+                  <strong>双栏更稳定</strong>
+                  <span>把支持点拆成两组或多组，比一段长文更像游戏状态面板。</span>
+                </div>
+                <div class="block mint">
+                  <strong>底部信息要上提</strong>
+                  <span>项目地址和建议语要抬起来，不要贴到最底边，破坏完成度。</span>
+                </div>
+                <div class="block yellow">
+                  <strong>固定品牌区</strong>
+                  <span>二维码和卡卡 IP 一直保留，既统一，又不会让海报没出处。</span>
+                </div>
+              </div>
+            </section>
+          </section>
+
+          <section class="feature-band">
+            <div class="feature cyan">
+              <strong>更好玩</strong>
+              <span>像掌机 HUD，不像普通科技页</span>
+            </div>
+            <div class="feature mint">
+              <strong>更明确</strong>
+              <span>重点、状态、结构一眼分层</span>
+            </div>
+            <div class="feature yellow">
+              <strong>更适合分享</strong>
+              <span>项目、课程、工具都能套</span>
+            </div>
+          </section>
+
+          <footer class="footer">
+            <div class="footer-stack">
+              <span class="footer-note">项目地址：把链接、出处或来源放在这里</span>
+              <span class="footer-note">一句话建议：最后用一句短建议或结论做收尾。</span>
+            </div>
+
+            <div class="contact-cluster">
+              <div class="code-slot">
+                <span class="code-card">
+                  <img src="./contact-code.png" alt="合作交流二维码" />
+                </span>
+                <span class="slot-caption code">合作交流</span>
+              </div>
+
+              <div class="ip-slot">
+                <span class="ip-card">
+                  <img src="./kk-character.jpeg" alt="卡卡 IP 形象" />
+                </span>
+                <span class="slot-caption ip">是卡卡呀</span>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

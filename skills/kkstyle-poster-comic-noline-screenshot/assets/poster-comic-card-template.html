@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KKStyle Poster Comic No-Line Template</title>
+    <style>
+      :root {
+        --edge: rgba(55, 54, 61, 0.04);
+        --shadow-soft: rgba(58, 136, 255, 0.14);
+        --canvas-width: 1500px;
+        --canvas-height: 2000px;
+        --bg-yellow: #ffef55;
+        --bg-red: #ff5f5f;
+        --bg-blue: #3a88ff;
+        --paper: #fffaf0;
+        --ink: #37363d;
+        --outline: 1px;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; width: 100%; height: 100%; background: var(--bg-yellow); }
+      body { font-family: "Arial Black", "Noto Sans SC", "PingFang SC", sans-serif; }
+      .frame {
+        position: relative;
+        width: var(--canvas-width);
+        height: var(--canvas-height);
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 20% 18%, rgba(255,255,255,0.28), transparent 20%),
+          linear-gradient(135deg, var(--bg-yellow) 0 54%, var(--bg-red) 54% 77%, var(--bg-blue) 77% 100%);
+      }
+      .dot {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.34);
+      }
+      .dot.one { top: 120px; left: 78px; width: 220px; height: 220px; }
+      .dot.two { right: 92px; top: 228px; width: 160px; height: 160px; }
+      .dot.three { left: 92px; bottom: 260px; width: 180px; height: 180px; }
+      .shell {
+        position: absolute;
+        inset: 72px;
+        border: var(--outline) solid var(--edge);
+        background: rgba(255,250,240,0.96);
+        box-shadow: 0 18px 34px var(--shadow-soft);
+        overflow: visible;
+      }
+      .date-chip {
+        position: absolute;
+        top: 26px;
+        right: 46px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 256px;
+        height: 74px;
+        padding: 0 22px;
+        border: var(--outline) solid var(--edge);
+        border-radius: 999px;
+        background: #fff;
+        color: var(--ink);
+        font-size: 26px;
+        font-weight: 900;
+        box-shadow: 10px 10px 0 rgba(58,136,255,0.3);
+        transform: rotate(5deg);
+        z-index: 8;
+      }
+      .date-chip::before {
+        content: "";
+        width: 18px;
+        height: 18px;
+        margin-right: 14px;
+        border: 1px solid var(--edge);
+        border-radius: 50%;
+        background: var(--bg-red);
+      }
+      .content {
+        position: absolute;
+        inset: 92px 42px 42px;
+        display: grid;
+        grid-template-rows: auto auto auto 1fr auto auto;
+        gap: 18px;
+      }
+      .tag-row { display: flex; gap: 12px; align-items: center; }
+      .tag {
+        display: inline-flex; align-items: center; justify-content: center;
+        min-height: 42px; padding: 0 16px; border: var(--outline) solid var(--edge); border-radius: 999px;
+        color: var(--ink); font-size: 20px; font-weight: 900;
+      }
+      .tag.yellow { background: var(--bg-yellow); }
+      .tag.blue { background: #b9d1ff; }
+      .hero { display: grid; grid-template-columns: 1fr 280px; gap: 18px; align-items: start; }
+      .title {
+        margin: 0; color: var(--ink); font-size: 94px; line-height: 0.98; letter-spacing: -0.05em; font-weight: 900;
+        text-transform: uppercase;
+        text-shadow: 6px 6px 0 rgba(255,95,95,0.3);
+      }
+      .blast-card {
+        padding: 18px 18px 16px;
+        border: var(--outline) solid var(--edge);
+        border-radius: 28px;
+        background: #fff;
+        box-shadow: 14px 14px 0 rgba(58,136,255,0.35);
+        display: grid; gap: 8px; transform: rotate(4deg);
+      }
+      .blast-card .mini { font-size: 24px; font-weight: 900; color: var(--bg-red); }
+      .blast-card .num { font-size: 96px; line-height: 0.9; font-weight: 900; }
+      .blast-card .label { font-size: 28px; font-weight: 900; }
+      .blast-card .sub { font-size: 19px; line-height: 1.26; font-weight: 700; }
+      .blast-card .foot {
+        display: inline-flex; align-items: center; justify-content: center; min-height: 38px; padding: 6px 12px;
+        border: 1px solid var(--edge); border-radius: 12px; background: #fff8c8; font-size: 18px; font-weight: 900;
+      }
+      .bubble {
+        position: relative;
+        padding: 18px 22px;
+        border: var(--outline) solid var(--edge);
+        border-radius: 28px;
+        background: #fff;
+        color: var(--ink);
+        font-size: 29px;
+        line-height: 1.36;
+        box-shadow: 10px 10px 0 rgba(255,95,95,0.24);
+      }
+      .bubble::after {
+        content: "";
+        position: absolute;
+        left: 46px;
+        bottom: -24px;
+        width: 34px;
+        height: 34px;
+        border-right: var(--outline) solid var(--edge);
+        border-bottom: var(--outline) solid var(--edge);
+        background: #fff;
+        transform: rotate(30deg);
+      }
+      .main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+      .panel {
+        padding: 18px 18px 16px;
+        border: var(--outline) solid var(--edge);
+        border-radius: 26px;
+        background: #fff;
+        display: grid; grid-template-rows: auto auto 1fr auto; gap: 12px;
+      }
+      .panel h2, .panel p { margin: 0; }
+      .panel h2 { font-size: 34px; line-height: 1; font-weight: 900; color: var(--ink); }
+      .panel p { font-size: 23px; line-height: 1.42; color: var(--ink); }
+      .big-line { display: flex; align-items: flex-end; gap: 10px; margin-bottom: 6px; }
+      .big-line strong { font-size: 76px; line-height: 0.9; font-weight: 900; }
+      .big-line span { font-size: 27px; font-weight: 800; }
+      .block-list { display: grid; gap: 12px; }
+      .block {
+        padding: 14px 16px; border: var(--outline) solid var(--edge); border-radius: 18px; background: #fff;
+      }
+      .block strong { display: block; margin-bottom: 4px; font-size: 22px; line-height: 1.1; font-weight: 900; }
+      .block span { display: block; font-size: 19px; line-height: 1.34; font-weight: 700; }
+      .block.yellow { background: #fff9cf; }
+      .block.blue { background: #e8f1ff; }
+      .block.red { background: #ffe1e1; }
+      .feature-band { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+      .feature {
+        min-height: 78px; padding: 12px 14px; border: var(--outline) solid var(--edge); border-radius: 18px;
+        display: grid; align-content: center; gap: 4px;
+      }
+      .feature strong { display: block; font-size: 21px; line-height: 1; font-weight: 900; }
+      .feature span { display: block; font-size: 18px; line-height: 1.22; font-weight: 700; }
+      .feature.yellow { background: #fff9cf; }
+      .feature.blue { background: #e8f1ff; }
+      .feature.red { background: #ffe1e1; }
+      .footer { display: flex; justify-content: space-between; gap: 18px; align-items: flex-end; }
+      .footer-stack { display: flex; flex-direction: column; gap: 10px; flex: 1 1 auto; transform: translateY(-28px); }
+      .footer-note {
+        padding: 10px 14px; border: var(--outline) solid var(--edge); border-radius: 18px;
+        background: #fff; color: var(--ink); font-size: 18px; font-weight: 700;
+      }
+      .contact-cluster { display: flex; align-items: flex-end; gap: 18px; transform: translate(-4px, -12px); position: relative; z-index: 8; }
+      .code-slot, .ip-slot { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+      .code-slot { transform: translateY(-12px); }
+      .ip-slot { transform: translate(-2px, -14px); }
+      .code-card, .ip-card {
+        width: 168px; height: 168px; overflow: hidden; border: var(--outline) solid var(--edge); border-radius: 24px; background: #fff;
+      }
+      .code-card { box-shadow: 12px 12px 0 rgba(58,136,255,0.22); }
+      .ip-card { box-shadow: 12px 12px 0 rgba(255,95,95,0.22); }
+      .code-card img, .ip-card img { display: block; width: 100%; height: 100%; object-fit: cover; }
+      .ip-card img { object-position: center top; }
+      .slot-caption {
+        display: inline-flex; align-items: center; justify-content: center; width: 156px; height: 42px; padding: 0 14px;
+        border: 1px solid var(--edge); border-radius: 16px; background: #fff; color: var(--ink); font-size: 18px; font-weight: 900;
+      }
+      .slot-caption.code { transform: translateX(8px); }
+          /* no-line softness */
+      .frame :is(.shell, .sheet, .board, .panel, .card, .feature, .feature-card, .metric-card, .summary, .summary-strip, .summary-bubble, .footer-note, .footer-tag, .date-chip, .tag, .subject, .brand, .brand-sub, .mini-tag, .panel-badge, .node, .step-body, .step-label, .code-card, .ip-card, .slot-caption, .lead-note, .note-card, .info-card, .support-card) {
+        box-shadow: 0 16px 32px var(--shadow-soft);
+      }
+      .frame :is(.title, h1, h2, h3, strong, .num, .big-number) {
+        text-shadow: 0 2px 0 rgba(255,255,255,0.22);
+      }
+      .frame :is(.connector, .steps::before, .margin-line, .border, .pixel-grid, .pixel-band span, .pixel-corner span) {
+        opacity: 0.34;
+      }
+</style>
+  </head>
+  <body>
+    <main class="frame">
+      <div class="dot one"></div><div class="dot two"></div><div class="dot three"></div>
+      <section class="shell">
+        <span class="date-chip">2026年03月26日</span>
+        <div class="content">
+          <div class="tag-row">
+            <span class="tag yellow">POSTER COMIC</span>
+            <span class="tag blue">BOLD MODE</span>
+          </div>
+          <section class="hero">
+            <h1 class="title">把重点做成<br />漫画海报</h1>
+            <div class="blast-card">
+              <span class="mini">WOW</span>
+              <span class="num">3:4</span>
+              <span class="label">爆点信息牌</span>
+              <span class="sub">适合项目推荐、课程整理、工具摘要和强观点内容。</span>
+              <span class="foot">COMIC HIT</span>
+            </div>
+          </section>
+          <p class="bubble">
+            这套风格像一张漫画封面：标题更炸，摘要像对话框，重点像爆点牌，
+            但信息层次依然清楚，适合做一眼就能抓住注意力的海报。
+          </p>
+          <section class="main-grid">
+            <section class="panel">
+              <h2>主信息区</h2>
+              <div class="big-line"><strong>先看爆点</strong><span>再读内容</span></div>
+              <div class="block-list">
+                <div class="block yellow"><strong>标题像封面词组</strong><span>主标题要有“封面感”，不要像普通文章标题。</span></div>
+                <div class="block blue"><strong>摘要像对话框</strong><span>先用一句气泡式导语讲清楚内容价值。</span></div>
+                <div class="block red"><strong>右上角负责爆点</strong><span>数字、关键词、结论和亮点都适合放在右上牌里。</span></div>
+              </div>
+            </section>
+            <section class="panel">
+              <h2>辅助信息区</h2>
+              <div class="block-list">
+                <div class="block blue"><strong>双栏更稳</strong><span>漫画感可以很强，但正文仍要做成稳定的块状结构。</span></div>
+                <div class="block red"><strong>底部信息上提</strong><span>项目地址和建议语要抬起来，别塌在最底边。</span></div>
+                <div class="block yellow"><strong>固定品牌区</strong><span>二维码和卡卡 IP 一直保留，让高热度风格也不会失去统一识别。</span></div>
+              </div>
+            </section>
+          </section>
+          <section class="feature-band">
+            <div class="feature yellow"><strong>更抓眼球</strong><span>适合一眼停住的内容</span></div>
+            <div class="feature blue"><strong>更有海报感</strong><span>标题、气泡、爆点都更直接</span></div>
+            <div class="feature red"><strong>更适合推荐</strong><span>项目、工具、课程都能套</span></div>
+          </section>
+          <footer class="footer">
+            <div class="footer-stack">
+              <span class="footer-note">项目地址：把链接、出处或来源放在这里</span>
+              <span class="footer-note">一句话建议：最后用一句短建议或结论做收尾。</span>
+            </div>
+            <div class="contact-cluster">
+              <div class="code-slot">
+                <span class="code-card"><img src="./contact-code.png" alt="合作交流二维码" /></span>
+                <span class="slot-caption code">合作交流</span>
+              </div>
+              <div class="ip-slot">
+                <span class="ip-card"><img src="./kk-character.jpeg" alt="卡卡 IP 形象" /></span>
+                <span class="slot-caption ip">是卡卡呀</span>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,4 @@
+interface:
+  display_name: "KKStyle Diagram Board Screenshot"
+  short_description: "Diagram-board 3:4 layouts with fixed date, QR, IP, and screenshot output"
+  default_prompt: "Use $kkstyle-diagram-board-screenshot to turn my notes into a diagram-board 3:4 poster with a top date sticker, a structured metric card, modular flow panels, a fixed contact QR block, a fixed Kaka IP slot, and optional PNG rendering."

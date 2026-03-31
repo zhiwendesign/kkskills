@@ -1,0 +1,4 @@
+interface:
+  display_name: "KKStyle Diagram Board No-Line Screenshot"
+  short_description: "No-line diagram-board 3:4 layouts with fixed date, QR, IP, and screenshot output"
+  default_prompt: "Use $kkstyle-diagram-board-noline-screenshot to turn my notes into a no-line diagram-board 3:4 explainer poster with soft modules, a top date label, a fixed contact QR block, a fixed Kaka IP slot, and optional PNG rendering."

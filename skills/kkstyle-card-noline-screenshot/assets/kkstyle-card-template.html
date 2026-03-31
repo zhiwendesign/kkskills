@@ -1,0 +1,756 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KKStyle Poster No-Line Template</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Noto+Sans+SC:wght@400;500;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --edge: rgba(49, 58, 72, 0.04);
+        --shadow-soft: rgba(39, 107, 234, 0.16);
+        --canvas-width: 1500px;
+        --canvas-height: 2000px;
+        --bg-blue: #276bea;
+        --pixel-blue: #a4ceff;
+        --pixel-blue-2: #62aaff;
+        --card-white: #fcfcfc;
+        --ink: #313a48;
+        --orange: #ff4d00;
+        --yellow: #ffed00;
+        --lime: #c2ff2e;
+        --outline: 1px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--bg-blue);
+      }
+
+      body {
+        font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+      }
+
+      .frame {
+        position: relative;
+        width: var(--canvas-width);
+        height: var(--canvas-height);
+        overflow: hidden;
+        background:
+          radial-gradient(circle at top right, rgba(255, 255, 255, 0.14), transparent 24%),
+          var(--bg-blue);
+      }
+
+      .pixel-grid {
+        position: absolute;
+        inset: 0;
+        opacity: 0.18;
+        background-image:
+          linear-gradient(var(--pixel-blue) 1px, transparent 1px),
+          linear-gradient(90deg, var(--pixel-blue) 1px, transparent 1px);
+        background-size: 56px 56px;
+      }
+
+      .pixel-band {
+        position: absolute;
+        display: grid;
+        grid-template-columns: repeat(6, 48px);
+        gap: 8px;
+      }
+
+      .pixel-band span {
+        width: 48px;
+        height: 48px;
+        background: var(--pixel-blue);
+      }
+
+      .pixel-band.top-left {
+        top: 28px;
+        left: 28px;
+      }
+
+      .pixel-band.bottom-right {
+        right: 28px;
+        bottom: 28px;
+      }
+
+      .shell {
+        position: absolute;
+        inset: 160px 70px 70px;
+        background: var(--card-white);
+        border: var(--outline) solid var(--edge);
+        border-radius: 38px 38px 42px 42px;
+        box-shadow: 0 18px 34px var(--shadow-soft);
+        transform: rotate(1deg);
+        overflow: visible;
+      }
+
+      .seal-top {
+        position: absolute;
+        top: -136px;
+        left: 96px;
+        display: flex;
+        gap: 74px;
+        z-index: 3;
+      }
+
+      .seal-eye {
+        position: relative;
+        width: 222px;
+        height: 184px;
+        background: var(--card-white);
+        border: var(--outline) solid var(--edge);
+        border-bottom: 0;
+        border-radius: 118px 118px 0 0;
+      }
+
+      .seal-eye.right {
+        width: 228px;
+        transform: rotate(1deg) translateY(4px);
+      }
+
+      .seal-eye::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: 22px;
+        width: 42px;
+        height: 66px;
+        transform: translateX(-50%);
+        background: var(--ink);
+        border-radius: 999px;
+      }
+
+      .seal-eye::after {
+        content: "";
+        position: absolute;
+        left: calc(50% + 9px);
+        bottom: 70px;
+        width: 14px;
+        height: 14px;
+        background: #fff;
+        border-radius: 50%;
+      }
+
+      .seal-eye.left::before,
+      .seal-eye.left::after {
+        margin-left: 8px;
+      }
+
+      .seal-eye.right::before,
+      .seal-eye.right::after {
+        margin-left: -8px;
+      }
+
+      .seal-brow {
+        position: absolute;
+        top: -24px;
+        width: 88px;
+        height: 30px;
+        border: var(--outline) solid var(--edge);
+        border-color: var(--edge) transparent transparent transparent;
+        border-radius: 60px / 26px;
+        background: transparent;
+      }
+
+      .seal-brow.left {
+        left: 48px;
+        transform: rotate(-6deg);
+      }
+
+      .seal-brow.right {
+        right: 46px;
+        transform: rotate(6deg);
+      }
+
+      .date-chip {
+        position: absolute;
+        top: -28px;
+        right: 52px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 246px;
+        height: 72px;
+        padding: 0 22px;
+        border: var(--outline) solid var(--edge);
+        border-radius: 999px;
+        background: #fff4a3;
+        color: var(--ink);
+        font-family: "Baloo 2", "Noto Sans SC", sans-serif;
+        font-size: 27px;
+        font-weight: 800;
+        letter-spacing: 0.01em;
+        box-shadow: 10px 10px 0 var(--pixel-blue);
+        transform: rotate(4deg);
+        z-index: 8;
+      }
+
+      .date-chip::before {
+        content: "";
+        width: 18px;
+        height: 18px;
+        margin-right: 14px;
+        border: 1px solid var(--edge);
+        border-radius: 50%;
+        background: var(--lime);
+        flex: 0 0 auto;
+      }
+
+      .content {
+        position: absolute;
+        inset: 108px 42px 42px;
+        display: grid;
+        grid-template-rows: auto auto auto 1fr auto auto;
+        gap: 18px;
+        overflow: visible;
+      }
+
+      .badge-row {
+        display: flex;
+        gap: 14px;
+        align-items: center;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 46px;
+        padding: 10px 18px;
+        border: var(--outline) solid var(--edge);
+        border-radius: 999px;
+        background: var(--yellow);
+        color: var(--ink);
+        font-family: "Baloo 2", "Noto Sans SC", sans-serif;
+        font-size: 24px;
+        font-weight: 800;
+      }
+
+      .badge.alt {
+        background: var(--lime);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1fr 250px;
+        gap: 18px;
+        align-items: start;
+        overflow: visible;
+      }
+
+      .title {
+        margin: 22px 0 0;
+        color: var(--ink);
+        font-family: "Baloo 2", "Noto Sans SC", sans-serif;
+        font-size: 90px;
+        line-height: 1.02;
+        letter-spacing: -0.04em;
+        font-weight: 900;
+        max-width: 920px;
+      }
+
+      .count-card {
+        padding: 18px 18px 16px;
+        border: var(--outline) solid var(--edge);
+        border-radius: 28px;
+        background: var(--lime);
+        color: var(--ink);
+        box-shadow: 12px 12px 0 var(--orange);
+        position: relative;
+        z-index: 5;
+        margin-top: -104px;
+        margin-right: -12px;
+        transform: rotate(5deg);
+        display: grid;
+        gap: 8px;
+      }
+
+      .count-card .mini {
+        font-size: 24px;
+        line-height: 1;
+        font-weight: 900;
+      }
+
+      .count-card .num {
+        display: block;
+        font-size: 98px;
+        line-height: 0.9;
+        font-weight: 900;
+      }
+
+      .count-card .label {
+        display: block;
+        font-size: 28px;
+        font-weight: 800;
+      }
+
+      .count-card .sub {
+        font-size: 21px;
+        line-height: 1.2;
+        font-weight: 800;
+      }
+
+      .count-card .foot {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 38px;
+        padding: 6px 12px;
+        border: 1px solid var(--edge);
+        border-radius: 14px;
+        background: #fff;
+        font-size: 19px;
+        font-weight: 900;
+      }
+
+      .bubble {
+        display: inline-block;
+        max-width: 100%;
+        padding: 18px 24px;
+        border: var(--outline) solid var(--edge);
+        border-radius: 28px;
+        background: #fff;
+        color: var(--ink);
+        font-size: 29px;
+        line-height: 1.4;
+        box-shadow: 10px 10px 0 var(--pixel-blue-2);
+      }
+
+      .main-grid {
+        display: grid;
+        grid-template-columns: 1.02fr 0.98fr;
+        gap: 22px;
+        height: 100%;
+        align-items: stretch;
+      }
+
+      .panel {
+        padding: 24px 24px 22px;
+        border: var(--outline) solid var(--edge);
+        border-radius: 24px;
+        background: #fff;
+        display: grid;
+        grid-template-rows: auto auto 1fr auto;
+        gap: 12px;
+        height: 100%;
+      }
+
+      .panel h2,
+      .panel p,
+      .panel ul {
+        margin: 0;
+      }
+
+      .panel h2 {
+        margin-bottom: 12px;
+        color: var(--ink);
+        font-family: "Baloo 2", "Noto Sans SC", sans-serif;
+        font-size: 34px;
+        line-height: 1;
+        font-weight: 800;
+      }
+
+      .panel p,
+      .panel li {
+        color: var(--ink);
+        font-size: 24px;
+        line-height: 1.45;
+      }
+
+      .panel ul {
+        padding-left: 24px;
+      }
+
+      .big-number {
+        display: flex;
+        align-items: flex-end;
+        gap: 12px;
+        margin-bottom: 8px;
+      }
+
+      .big-number strong {
+        font-size: 78px;
+        line-height: 0.85;
+        font-weight: 900;
+      }
+
+      .big-number span {
+        font-size: 28px;
+        font-weight: 800;
+      }
+
+      .dense-list,
+      .audience-grid {
+        display: grid;
+        gap: 12px;
+      }
+
+      .dense-item,
+      .audience-card,
+      .panel-tail {
+        padding: 14px 16px;
+        border: 1px solid var(--edge);
+        border-radius: 18px;
+      }
+
+      .dense-item strong,
+      .audience-card strong,
+      .panel-tail strong {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 23px;
+        line-height: 1.1;
+        font-weight: 900;
+      }
+
+      .dense-item span,
+      .audience-card span,
+      .panel-tail span {
+        display: block;
+        font-size: 20px;
+        line-height: 1.33;
+        font-weight: 700;
+      }
+
+      .dense-item.blue,
+      .audience-card:nth-child(1) {
+        background: #e7f2ff;
+      }
+
+      .dense-item.yellow,
+      .audience-card:nth-child(2),
+      .panel-tail.warm {
+        background: #fff5c8;
+      }
+
+      .dense-item.lime,
+      .audience-card:nth-child(3) {
+        background: #eefed3;
+      }
+
+      .panel-tail.blue {
+        background: #dfeeff;
+      }
+
+      .feature-band {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+      }
+
+      .feature-card {
+        min-height: 82px;
+        padding: 12px 16px;
+        border: var(--outline) solid var(--edge);
+        border-radius: 18px;
+        display: grid;
+        align-content: center;
+        gap: 4px;
+      }
+
+      .feature-card strong {
+        display: block;
+        font-size: 22px;
+        line-height: 1;
+        font-weight: 900;
+      }
+
+      .feature-card span {
+        display: block;
+        font-size: 18px;
+        line-height: 1.2;
+        font-weight: 700;
+      }
+
+      .feature-card.orange {
+        background: var(--orange);
+        color: #fff;
+      }
+
+      .feature-card.yellow {
+        background: var(--yellow);
+        color: var(--ink);
+      }
+
+      .feature-card.blue {
+        background: var(--pixel-blue);
+        color: var(--ink);
+      }
+
+      .footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 18px;
+        align-items: flex-end;
+        position: relative;
+        z-index: 12;
+        overflow: visible;
+      }
+
+      .footer-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        flex: 1 1 auto;
+        transform: translateY(-34px);
+      }
+
+      .footer-note {
+        padding: 8px 14px;
+        border: var(--outline) solid var(--edge);
+        border-radius: 18px;
+        background: var(--pixel-blue);
+        color: var(--ink);
+        font-size: 18px;
+        font-weight: 700;
+      }
+
+      .contact-cluster {
+        display: flex;
+        align-items: flex-end;
+        gap: 18px;
+        transform: translate(-6px, -12px);
+        position: relative;
+        z-index: 30;
+      }
+
+      .code-slot,
+      .ip-slot {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        position: relative;
+        z-index: 31;
+      }
+
+      .code-slot {
+        transform: translateY(-14px);
+      }
+
+      .ip-slot {
+        transform: translate(-4px, -16px);
+        margin-right: 10px;
+      }
+
+      .code-card,
+      .ip-avatar {
+        width: 172px;
+        height: 172px;
+        overflow: hidden;
+        border: var(--outline) solid var(--edge);
+        border-radius: 34px;
+      }
+
+      .code-card {
+        background: #fff;
+        box-shadow: 12px 12px 0 var(--lime);
+        transform: rotate(-4deg);
+      }
+
+      .ip-avatar {
+        background: #d7ecff;
+        box-shadow: 14px 14px 0 var(--pixel-blue-2);
+        transform: rotate(3deg);
+      }
+
+      .code-card img,
+      .ip-avatar img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .ip-avatar img {
+        object-position: center top;
+      }
+
+      .slot-caption {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 156px;
+        height: 42px;
+        padding: 0 14px;
+        border: 1px solid var(--edge);
+        border-radius: 16px;
+        color: var(--ink);
+        font-size: 18px;
+        font-weight: 900;
+        line-height: 1;
+        letter-spacing: 0.01em;
+        background: #fff;
+        z-index: 31;
+      }
+
+      .slot-caption.code {
+        background: #f7ffdd;
+        box-shadow: 6px 6px 0 var(--lime);
+        transform: translateX(10px) rotate(-2deg);
+      }
+
+      .slot-caption.ip {
+        background: #fff2a8;
+        box-shadow: 6px 6px 0 var(--pixel-blue);
+        transform: rotate(2deg);
+      }
+          /* no-line softness */
+      .frame :is(.shell, .sheet, .board, .panel, .card, .feature, .feature-card, .metric-card, .summary, .summary-strip, .summary-bubble, .footer-note, .footer-tag, .date-chip, .tag, .subject, .brand, .brand-sub, .mini-tag, .panel-badge, .node, .step-body, .step-label, .code-card, .ip-card, .slot-caption, .lead-note, .note-card, .info-card, .support-card) {
+        box-shadow: 0 16px 32px var(--shadow-soft);
+      }
+      .frame :is(.title, h1, h2, h3, strong, .num, .big-number) {
+        text-shadow: 0 2px 0 rgba(255,255,255,0.22);
+      }
+      .frame :is(.connector, .steps::before, .margin-line, .border, .pixel-grid, .pixel-band span, .pixel-corner span) {
+        opacity: 0.34;
+      }
+</style>
+  </head>
+  <body>
+    <main class="frame">
+      <div class="pixel-grid"></div>
+
+      <div class="pixel-band top-left">
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+
+      <div class="pixel-band bottom-right">
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+
+      <section class="shell">
+        <div class="seal-top">
+          <span class="seal-eye left"><span class="seal-brow left"></span></span>
+          <span class="seal-eye right"><span class="seal-brow right"></span></span>
+        </div>
+
+        <span class="date-chip">2026年03月26日</span>
+
+        <div class="content">
+          <div class="badge-row">
+            <span class="badge">KKSTYLE</span>
+            <span class="badge alt">POSTER MODE</span>
+          </div>
+
+          <section class="hero">
+            <h1 class="title">把重点做成<br />一眼看懂的海报</h1>
+            <div class="count-card">
+              <span class="mini">默认</span>
+              <span class="num">3:4</span>
+              <span class="label">高密度结构</span>
+              <span class="sub">标题、亮点贴纸、双栏模块和底部结论一起排满。</span>
+              <span class="foot">右上角可突破白卡边界</span>
+            </div>
+          </section>
+
+          <p class="bubble">
+            这套模板适合工具推荐、课程整理、清单摘要和教程亮点。信息不要平铺，
+            要做成一眼能抓到重点的模块化海报。
+          </p>
+
+          <section class="main-grid">
+            <section class="panel">
+              <h2>主信息区</h2>
+              <div class="big-number">
+                <strong>先看懂</strong>
+                <span>再展开</span>
+              </div>
+              <div class="dense-list">
+                <div class="dense-item blue">
+                  <strong>英雄标题</strong>
+                  <span>标题尽量控制在两到三行，语气要短、准、可爱。</span>
+                </div>
+                <div class="dense-item yellow">
+                  <strong>摘要气泡</strong>
+                  <span>用一句话先解释“这是什么”和“为什么值得看”。</span>
+                </div>
+                <div class="dense-item lime">
+                  <strong>主卡分层</strong>
+                  <span>把长段落拆成小卡、短句和强标签，不要放整屏细字。</span>
+                </div>
+              </div>
+              <div class="panel-tail blue">
+                <strong>留白策略</strong>
+                <span>空就补信息块，不要把正文无限放大，也不要让下半区发空。</span>
+              </div>
+            </section>
+
+            <section class="panel">
+              <h2>辅助信息区</h2>
+              <div class="audience-grid">
+                <div class="audience-card">
+                  <strong>右上角爆点</strong>
+                  <span>放数字、结论或最能吸引眼球的卖点，可以冲出白色主卡。</span>
+                </div>
+                <div class="audience-card">
+                  <strong>右栏小卡</strong>
+                  <span>适合放适合谁、支持平台、使用方式、兼容范围这类内容。</span>
+                </div>
+                <div class="audience-card">
+                  <strong>底部补充</strong>
+                  <span>项目地址、建议语、提醒贴纸都可以往底部做收束。</span>
+                </div>
+              </div>
+              <div class="panel-tail warm">
+                <strong>固定 IP</strong>
+                <span>右下角保留卡卡位，上图下字，文案固定为“是卡卡呀”。</span>
+              </div>
+            </section>
+          </section>
+
+          <section class="feature-band">
+            <div class="feature-card orange">
+              <strong>更饱满</strong>
+              <span>优先补层次，不是硬塞大段字</span>
+            </div>
+            <div class="feature-card yellow">
+              <strong>更醒目</strong>
+              <span>重点要有一个抢眼数据贴纸</span>
+            </div>
+            <div class="feature-card blue">
+              <strong>更稳定</strong>
+              <span>每次都给卡卡 IP 固定位置</span>
+            </div>
+          </section>
+
+          <footer class="footer">
+            <div class="footer-stack">
+              <span class="footer-note">项目地址：把链接、出处或来源放在这里</span>
+              <span class="footer-note">一句话建议：最后用一句短建议或结论做收尾。</span>
+            </div>
+
+            <div class="contact-cluster">
+              <div class="code-slot">
+                <span class="code-card">
+                  <img src="./contact-code.png" alt="合作交流二维码" />
+                </span>
+                <span class="slot-caption code">合作交流</span>
+              </div>
+
+              <div class="ip-slot">
+                <span class="ip-avatar">
+                  <img src="./kk-character.jpeg" alt="卡卡 IP 形象" />
+                </span>
+                <span class="slot-caption ip">是卡卡呀</span>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

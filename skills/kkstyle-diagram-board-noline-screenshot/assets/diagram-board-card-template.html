@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KKStyle Diagram Board No-Line Template</title>
+    <style>
+      :root {
+        --edge: rgba(49, 66, 83, 0.04);
+        --shadow-soft: rgba(68, 168, 255, 0.12);
+        --canvas-width: 1500px;
+        --canvas-height: 2000px;
+        --bg: #dff4ff;
+        --board: #fbfdff;
+        --ink: #314253;
+        --line: #bfdced;
+        --accent: #44a8ff;
+        --green: #78c97b;
+        --yellow: #ffcc4d;
+        --coral: #ff8b7f;
+        --soft-blue: #e9f5ff;
+        --soft-green: #edf9ef;
+        --soft-yellow: #fff6d6;
+        --soft-coral: #ffe7e2;
+        --outline: 1px;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; width: 100%; height: 100%; background: var(--bg); }
+      body { font-family: "Trebuchet MS", "Avenir Next", "PingFang SC", "Noto Sans SC", sans-serif; }
+      .frame {
+        position: relative;
+        width: var(--canvas-width);
+        height: var(--canvas-height);
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 18% 12%, rgba(255,255,255,0.9), transparent 18%),
+          radial-gradient(circle at 86% 20%, rgba(68,168,255,0.12), transparent 18%),
+          linear-gradient(rgba(191,220,237,0.5) 2px, transparent 2px),
+          linear-gradient(90deg, rgba(191,220,237,0.32) 2px, transparent 2px),
+          linear-gradient(180deg, #eefaff, #dff4ff);
+        background-size: auto, auto, 72px 72px, 72px 72px, auto;
+      }
+      .pin {
+        position: absolute;
+        width: 26px;
+        height: 26px;
+        border: var(--outline) solid var(--edge);
+        border-radius: 50%;
+        background: var(--coral);
+        z-index: 7;
+      }
+      .pin.left { top: 64px; left: 88px; }
+      .pin.right { top: 88px; right: 114px; background: var(--yellow); }
+      .board {
+        position: absolute;
+        inset: 52px;
+        border: var(--outline) solid var(--edge);
+        border-radius: 42px;
+        background:
+          linear-gradient(rgba(191,220,237,0.18) 2px, transparent 2px),
+          linear-gradient(90deg, rgba(191,220,237,0.14) 2px, transparent 2px),
+          linear-gradient(180deg, #ffffff, var(--board));
+        background-size: 58px 58px, 58px 58px, auto;
+        box-shadow: 24px 24px 0 rgba(89, 164, 222, 0.18);
+        overflow: hidden;
+      }
+      .top-bar {
+        position: absolute;
+        top: 42px;
+        left: 44px;
+        right: 44px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        z-index: 6;
+      }
+      .brand-wrap { display: flex; gap: 12px; align-items: center; }
+      .brand, .brand-sub, .date-chip, .mini-tag, .step-label, .footer-tag, .slot-caption {
+        border: var(--outline) solid var(--edge);
+        color: var(--ink);
+        font-weight: 900;
+      }
+      .brand, .brand-sub {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 0 16px;
+        border-radius: 999px;
+        background: #fff;
+        font-size: 20px;
+        letter-spacing: 0.05em;
+      }
+      .brand { background: var(--soft-yellow); }
+      .brand-sub { background: var(--soft-blue); }
+      .date-chip {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 276px;
+        height: 78px;
+        padding: 0 22px;
+        border-radius: 999px;
+        background: #fff;
+        font-size: 28px;
+        box-shadow: 10px 10px 0 rgba(68,168,255,0.16);
+        transform: translateY(16px);
+      }
+      .date-chip::before {
+        content: "";
+        width: 18px;
+        height: 18px;
+        margin-right: 14px;
+        border-radius: 50%;
+        border: 1px solid var(--edge);
+        background: var(--yellow);
+      }
+      .content {
+        position: absolute;
+        inset: 140px 42px 42px;
+        display: grid;
+        grid-template-rows: auto auto auto 1fr auto auto;
+        gap: 20px;
+      }
+      .hero {
+        display: grid;
+        grid-template-columns: 1fr 312px;
+        gap: 22px;
+        align-items: start;
+      }
+      .hero-copy { display: grid; gap: 14px; }
+      .kicker-row { display: flex; gap: 10px; align-items: center; }
+      .mini-tag {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 40px;
+        padding: 0 12px;
+        border-radius: 14px;
+        background: #fff;
+        font-size: 18px;
+      }
+      .mini-tag.green { background: var(--soft-green); }
+      .title {
+        margin: 0;
+        font-size: 90px;
+        line-height: 0.98;
+        letter-spacing: -0.05em;
+        font-weight: 900;
+        color: var(--ink);
+        max-width: 900px;
+      }
+      .metric-card {
+        position: relative;
+        padding: 18px 18px 16px;
+        border: var(--outline) solid var(--edge);
+        border-radius: 30px;
+        background: #fff;
+        box-shadow: 14px 14px 0 rgba(68,168,255,0.18);
+        display: grid;
+        gap: 8px;
+      }
+      .metric-card::after {
+        content: "";
+        position: absolute;
+        inset: 14px 14px auto auto;
+        width: 56px;
+        height: 16px;
+        border-radius: 999px;
+        background: var(--soft-yellow);
+        border: var(--outline) solid var(--edge);
+      }
+      .metric-card .mini { font-size: 22px; font-weight: 900; color: var(--accent); }
+      .metric-card .num { font-size: 94px; line-height: 0.88; font-weight: 900; }
+      .metric-card .label { font-size: 28px; line-height: 1.04; font-weight: 900; }
+      .metric-card .sub { font-size: 19px; line-height: 1.28; font-weight: 700; }
+      .metric-card .foot {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 38px;
+        padding: 0 12px;
+        border: 1px solid var(--edge);
+        border-radius: 12px;
+        background: var(--soft-blue);
+        font-size: 18px;
+        font-weight: 900;
+      }
+      .summary {
+        position: relative;
+        padding: 20px 24px 22px;
+        border: var(--outline) solid var(--edge);
+        border-radius: 24px;
+        background: var(--soft-yellow);
+        font-size: 30px;
+        line-height: 1.38;
+        font-weight: 700;
+      }
+      .summary::after {
+        content: "";
+        position: absolute;
+        left: 42px;
+        bottom: -20px;
+        width: 34px;
+        height: 34px;
+        background: var(--soft-yellow);
+        border-left: var(--outline) solid var(--edge);
+        border-bottom: var(--outline) solid var(--edge);
+        transform: rotate(-35deg);
+      }
+      .main-grid {
+        display: grid;
+        grid-template-columns: 1.08fr 0.92fr;
+        gap: 22px;
+      }
+      .panel {
+        position: relative;
+        padding: 18px 18px 16px;
+        border: var(--outline) solid var(--edge);
+        border-radius: 28px;
+        background: rgba(255,255,255,0.92);
+      }
+      .panel h2, .panel p, .node strong, .node span, .step-card strong, .step-card span { margin: 0; }
+      .panel-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+      }
+      .panel-title h2 {
+        font-size: 34px;
+        line-height: 1;
+        font-weight: 900;
+      }
+      .panel-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 34px;
+        padding: 0 12px;
+        border: 1px solid var(--edge);
+        border-radius: 999px;
+        background: var(--soft-blue);
+        font-size: 16px;
+        font-weight: 900;
+      }
+      .steps {
+        position: relative;
+        display: grid;
+        gap: 18px;
+        padding-left: 12px;
+      }
+      .steps::before {
+        content: "";
+        position: absolute;
+        left: 60px;
+        top: 18px;
+        bottom: 28px;
+        width: 2px;
+        background: repeating-linear-gradient(
+          to bottom,
+          var(--ink) 0 16px,
+          transparent 16px 30px
+        );
+      }
+      .step-card {
+        position: relative;
+        display: grid;
+        grid-template-columns: 92px 1fr;
+        gap: 14px;
+        align-items: start;
+      }
+      .step-label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 92px;
+        min-height: 92px;
+        border-radius: 24px;
+        background: var(--soft-blue);
+        font-size: 24px;
+      }
+      .step-label.green { background: var(--soft-green); }
+      .step-label.yellow { background: var(--soft-yellow); }
+      .step-body {
+        min-height: 92px;
+        padding: 14px 16px;
+        border: var(--outline) solid var(--edge);
+        border-radius: 22px;
+        background: #fff;
+        display: grid;
+        align-content: center;
+        gap: 6px;
+      }
+      .step-body strong { font-size: 24px; line-height: 1.1; font-weight: 900; }
+      .step-body span { font-size: 18px; line-height: 1.34; font-weight: 700; }
+      .right-stack {
+        position: relative;
+        display: grid;
+        gap: 14px;
+        padding-top: 8px;
+      }
+      .connector {
+        position: absolute;
+        left: 38px;
+        right: 38px;
+        height: 0;
+        border-top: 1px dashed var(--edge);
+        opacity: 0.6;
+      }
+      .connector.one { top: 132px; }
+      .connector.two { top: 290px; }
+      .node {
+        position: relative;
+        padding: 16px 18px;
+        border: var(--outline) solid var(--edge);
+        border-radius: 22px;
+        background: #fff;
+        display: grid;
+        gap: 6px;
+      }
+      .node.blue { background: var(--soft-blue); }
+      .node.green { background: var(--soft-green); }
+      .node.yellow { background: var(--soft-yellow); }
+      .node.coral { background: var(--soft-coral); }
+      .node::after {
+        content: "";
+        position: absolute;
+        right: 14px;
+        top: 16px;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        border: 1px solid var(--edge);
+        background: #fff;
+      }
+      .node strong { font-size: 23px; line-height: 1.1; font-weight: 900; }
+      .node span { font-size: 18px; line-height: 1.34; font-weight: 700; }
+      .feature-band {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+      }
+      .feature {
+        min-height: 84px;
+        padding: 12px 14px;
+        border: var(--outline) solid var(--edge);
+        border-radius: 18px;
+        background: #fff;
+        display: grid;
+        align-content: center;
+        gap: 4px;
+      }
+      .feature.yellow { background: var(--soft-yellow); }
+      .feature.green { background: var(--soft-green); }
+      .feature.blue { background: var(--soft-blue); }
+      .feature strong { display: block; font-size: 21px; line-height: 1; font-weight: 900; }
+      .feature span { display: block; font-size: 18px; line-height: 1.24; font-weight: 700; }
+      .footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 18px;
+        align-items: flex-end;
+      }
+      .footer-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        flex: 1 1 auto;
+        transform: translateY(-24px);
+      }
+      .footer-tag {
+        display: inline-flex;
+        align-items: center;
+        min-height: 42px;
+        padding: 0 14px;
+        border-radius: 16px;
+        background: #fff;
+        font-size: 18px;
+      }
+      .contact-cluster {
+        display: flex;
+        align-items: flex-end;
+        gap: 18px;
+        transform: translate(-4px, -12px);
+        position: relative;
+        z-index: 8;
+      }
+      .code-slot, .ip-slot {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+      }
+      .code-slot { transform: translateY(-10px); }
+      .ip-slot { transform: translate(-2px, -10px); }
+      .code-card, .ip-card {
+        width: 168px;
+        height: 168px;
+        overflow: hidden;
+        border: var(--outline) solid var(--edge);
+        border-radius: 24px;
+        background: #fff;
+      }
+      .code-card { box-shadow: 12px 12px 0 rgba(68,168,255,0.18); }
+      .ip-card { box-shadow: 12px 12px 0 rgba(120,201,123,0.18); }
+      .code-card img, .ip-card img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .ip-card img { object-position: center top; }
+      .slot-caption {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 156px;
+        height: 42px;
+        padding: 0 14px;
+        border-radius: 16px;
+        background: #fff;
+        font-size: 18px;
+      }
+      .slot-caption.code { transform: translateX(8px); }
+          /* no-line softness */
+      .frame :is(.shell, .sheet, .board, .panel, .card, .feature, .feature-card, .metric-card, .summary, .summary-strip, .summary-bubble, .footer-note, .footer-tag, .date-chip, .tag, .subject, .brand, .brand-sub, .mini-tag, .panel-badge, .node, .step-body, .step-label, .code-card, .ip-card, .slot-caption, .lead-note, .note-card, .info-card, .support-card) {
+        box-shadow: 0 16px 32px var(--shadow-soft);
+      }
+      .frame :is(.title, h1, h2, h3, strong, .num, .big-number) {
+        text-shadow: 0 2px 0 rgba(255,255,255,0.22);
+      }
+      .frame :is(.connector, .steps::before, .margin-line, .border, .pixel-grid, .pixel-band span, .pixel-corner span) {
+        opacity: 0.34;
+      }
+</style>
+  </head>
+  <body>
+    <main class="frame">
+      <span class="pin left"></span>
+      <span class="pin right"></span>
+      <section class="board">
+        <header class="top-bar">
+          <div class="brand-wrap">
+            <span class="brand">DIAGRAM BOARD</span>
+            <span class="brand-sub">VISUAL MAP</span>
+          </div>
+          <span class="date-chip">2026年03月26日</span>
+        </header>
+        <div class="content">
+          <section class="hero">
+            <div class="hero-copy">
+              <div class="kicker-row">
+                <span class="mini-tag">INFO FLOW</span>
+                <span class="mini-tag green">3:4 BOARD</span>
+              </div>
+              <h1 class="title">把重点做成<br />信息图白板海报</h1>
+            </div>
+            <div class="metric-card">
+              <span class="mini">MODULE</span>
+              <span class="num">4</span>
+              <span class="label">结构块更清楚</span>
+              <span class="sub">适合把项目、工具、流程、方法论和步骤关系讲清楚。</span>
+              <span class="foot">MAP VIEW</span>
+            </div>
+          </section>
+          <section class="summary">
+            这套风格像一张讲解板：不是单纯堆文案，而是用模块框、步骤卡、节点和提示条，
+            把“先看什么、后看什么、它们怎么连接”直接画出来。
+          </section>
+          <section class="main-grid">
+            <section class="panel">
+              <div class="panel-title">
+                <h2>主流程板</h2>
+                <span class="panel-badge">STEP MAP</span>
+              </div>
+              <div class="steps">
+                <div class="step-card">
+                  <div class="step-label">01</div>
+                  <div class="step-body">
+                    <strong>先讲主题和目标</strong>
+                    <span>标题先定义这张海报想帮用户看懂什么，不要只是改写原文。</span>
+                  </div>
+                </div>
+                <div class="step-card">
+                  <div class="step-label green">02</div>
+                  <div class="step-body">
+                    <strong>再拆模块和关系</strong>
+                    <span>把内容拆成步骤、角色、功能或结构块，再决定谁连接谁。</span>
+                  </div>
+                </div>
+                <div class="step-card">
+                  <div class="step-label yellow">03</div>
+                  <div class="step-body">
+                    <strong>最后补建议和来源</strong>
+                    <span>底部信息上提，收尾要给读者结论，而不是把白板底部留空。</span>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section class="panel">
+              <div class="panel-title">
+                <h2>辅助结构图</h2>
+                <span class="panel-badge">NODE VIEW</span>
+              </div>
+              <div class="right-stack">
+                <span class="connector one"></span>
+                <span class="connector two"></span>
+                <div class="node blue">
+                  <strong>摘要条是第一层解释</strong>
+                  <span>先告诉用户这张白板的阅读方式，再让他进入具体模块。</span>
+                </div>
+                <div class="node green">
+                  <strong>右上数据卡是第二层爆点</strong>
+                  <span>模块数、步骤数、阶段数、兼容范围都适合放进这里。</span>
+                </div>
+                <div class="node yellow">
+                  <strong>连接关系必须可见</strong>
+                  <span>虚线、编号、箭头和标签都可以用，但不要没有引导路径。</span>
+                </div>
+                <div class="node coral">
+                  <strong>固定品牌区保持识别</strong>
+                  <span>二维码和卡卡 IP 一直保留，让每张图都能被联系和认出。</span>
+                </div>
+              </div>
+            </section>
+          </section>
+          <section class="feature-band">
+            <div class="feature blue"><strong>更像讲解图</strong><span>结构先行，不靠长文撑版</span></div>
+            <div class="feature green"><strong>更适合流程</strong><span>步骤、角色、模块关系都好放</span></div>
+            <div class="feature yellow"><strong>更利于扫读</strong><span>一眼看到重点，再逐块阅读</span></div>
+          </section>
+          <footer class="footer">
+            <div class="footer-stack">
+              <span class="footer-tag">项目地址：把链接、出处或来源放在这里</span>
+              <span class="footer-tag">一句话建议：最后用一句短建议或结论做收尾。</span>
+            </div>
+            <div class="contact-cluster">
+              <div class="code-slot">
+                <span class="code-card"><img src="./contact-code.png" alt="合作交流二维码" /></span>
+                <span class="slot-caption code">合作交流</span>
+              </div>
+              <div class="ip-slot">
+                <span class="ip-card"><img src="./kk-character.jpeg" alt="卡卡 IP 形象" /></span>
+                <span class="slot-caption ip">是卡卡呀</span>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

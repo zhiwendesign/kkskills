@@ -1,0 +1,4 @@
+interface:
+  display_name: "KKStyle Scrapbook No-Line Screenshot"
+  short_description: "No-line warm scrapbook-style 3:4 posters with fixed date, QR, IP, and screenshot output"
+  default_prompt: "Use $kkstyle-scrapbook-noline-screenshot to turn my notes into a no-line warm scrapbook 3:4 poster with layered paper blocks, a top date chip, a fixed contact QR block, a fixed Kaka IP slot, and optional PNG rendering."
