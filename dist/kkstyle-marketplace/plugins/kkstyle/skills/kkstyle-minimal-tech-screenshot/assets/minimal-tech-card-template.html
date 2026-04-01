@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KKStyle Minimal Tech Template</title>
+    <style>
+      :root {
+        --canvas-width: 1500px;
+        --canvas-height: 2000px;
+        --bg: #f5f7fb;
+        --ink: #313b49;
+        --muted: #7c8797;
+        --line: #d6dfeb;
+        --accent: #5ac8fa;
+        --soft: #ffffff;
+        --panel: #eef4fb;
+        --outline: 3px;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; width: 100%; height: 100%; background: var(--bg); }
+      body { font-family: "SF Pro Display", "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif; }
+      .frame {
+        position: relative;
+        width: var(--canvas-width);
+        height: var(--canvas-height);
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 84% 12%, rgba(90,200,250,0.18), transparent 18%),
+          linear-gradient(rgba(214,223,235,0.65) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(214,223,235,0.45) 1px, transparent 1px),
+          linear-gradient(180deg, #fafcff, var(--bg));
+        background-size: auto, 48px 48px, 48px 48px, auto;
+      }
+      .shell {
+        position: absolute;
+        inset: 58px;
+        border: var(--outline) solid var(--ink);
+        border-radius: 44px;
+        background: rgba(255,255,255,0.72);
+        backdrop-filter: blur(2px);
+        overflow: hidden;
+      }
+      .top-bar {
+        position: absolute;
+        top: 34px;
+        left: 44px;
+        right: 44px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 6;
+      }
+      .brand {
+        display: inline-flex; align-items: center; gap: 12px; min-height: 50px; padding: 0 16px;
+        border: var(--outline) solid var(--ink); border-radius: 999px; background: var(--soft);
+        color: var(--ink); font-size: 22px; font-weight: 900; letter-spacing: 0.08em;
+      }
+      .brand::before { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); }
+      .date-chip {
+        display: inline-flex; align-items: center; justify-content: center;
+        min-width: 252px; height: 70px; padding: 0 22px; border: var(--outline) solid var(--ink);
+        border-radius: 999px; background: var(--soft); color: var(--ink); font-size: 26px; font-weight: 800;
+        box-shadow: 10px 10px 0 rgba(90,200,250,0.18);
+      }
+      .date-chip::before {
+        content: ""; width: 18px; height: 18px; margin-right: 14px; border-radius: 50%;
+        background: var(--accent); border: 3px solid var(--ink);
+      }
+      .content {
+        position: absolute;
+        inset: 130px 46px 46px;
+        display: grid;
+        grid-template-rows: auto auto auto 1fr auto auto;
+        gap: 22px;
+      }
+      .tag-row { display: flex; gap: 12px; align-items: center; }
+      .tag {
+        display: inline-flex; align-items: center; justify-content: center;
+        min-height: 40px; padding: 0 14px; border: var(--outline) solid var(--ink); border-radius: 999px;
+        background: var(--soft); color: var(--ink); font-size: 19px; font-weight: 900;
+      }
+      .tag.alt { background: var(--panel); }
+      .hero { display: grid; grid-template-columns: 1fr 290px; gap: 22px; align-items: start; }
+      .title {
+        margin: 0; color: var(--ink); font-size: 96px; line-height: 0.98; letter-spacing: -0.05em; font-weight: 900;
+        max-width: 920px;
+      }
+      .metric-card {
+        padding: 18px 18px 16px; border: var(--outline) solid var(--ink); border-radius: 28px; background: var(--soft);
+        box-shadow: 12px 12px 0 rgba(90,200,250,0.2); display: grid; gap: 8px;
+      }
+      .metric-card .mini { font-size: 22px; font-weight: 900; color: var(--accent); }
+      .metric-card .num { font-size: 94px; line-height: 0.9; font-weight: 900; }
+      .metric-card .label { font-size: 28px; font-weight: 900; }
+      .metric-card .sub { font-size: 19px; line-height: 1.26; font-weight: 700; }
+      .metric-card .foot {
+        display: inline-flex; align-items: center; justify-content: center; min-height: 38px; padding: 6px 12px;
+        border: 3px solid var(--ink); border-radius: 12px; background: var(--panel); font-size: 18px; font-weight: 900;
+      }
+      .lead {
+        padding-top: 18px; border-top: 4px solid var(--line); color: var(--ink);
+        font-size: 31px; line-height: 1.36; font-weight: 600;
+      }
+      .main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+      .panel {
+        padding: 18px 18px 16px; border: var(--outline) solid var(--ink); border-radius: 26px;
+        background: var(--soft); display: grid; grid-template-rows: auto auto 1fr auto; gap: 12px;
+      }
+      .panel h2, .panel p { margin: 0; }
+      .panel h2 { font-size: 34px; line-height: 1; font-weight: 900; color: var(--ink); }
+      .panel p { font-size: 23px; line-height: 1.42; color: var(--ink); }
+      .big-line { display: flex; align-items: flex-end; gap: 10px; margin-bottom: 6px; }
+      .big-line strong { font-size: 76px; line-height: 0.9; font-weight: 900; }
+      .big-line span { font-size: 27px; font-weight: 800; }
+      .card-list { display: grid; gap: 12px; }
+      .card {
+        padding: 14px 16px; border: var(--outline) solid var(--ink); border-radius: 18px; background: var(--panel);
+      }
+      .card strong { display: block; margin-bottom: 4px; font-size: 22px; line-height: 1.1; font-weight: 900; }
+      .card span { display: block; font-size: 19px; line-height: 1.34; font-weight: 700; }
+      .card.white { background: #fff; }
+      .feature-band { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+      .feature {
+        min-height: 78px; padding: 12px 14px; border: var(--outline) solid var(--ink); border-radius: 18px;
+        display: grid; align-content: center; gap: 4px; background: var(--soft);
+      }
+      .feature strong { display: block; font-size: 21px; line-height: 1; font-weight: 900; }
+      .feature span { display: block; font-size: 18px; line-height: 1.22; font-weight: 700; }
+      .footer { display: flex; justify-content: space-between; gap: 18px; align-items: flex-end; }
+      .footer-stack { display: flex; flex-direction: column; gap: 10px; flex: 1 1 auto; transform: translateY(-28px); }
+      .footer-note {
+        padding: 10px 14px; border: var(--outline) solid var(--ink); border-radius: 18px;
+        background: var(--soft); color: var(--ink); font-size: 18px; font-weight: 700;
+      }
+      .contact-cluster { display: flex; align-items: flex-end; gap: 18px; transform: translate(-4px, -12px); position: relative; z-index: 8; }
+      .code-slot, .ip-slot { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+      .code-slot { transform: translateY(-12px); }
+      .ip-slot { transform: translate(-2px, -14px); }
+      .code-card, .ip-card {
+        width: 168px; height: 168px; overflow: hidden; border: var(--outline) solid var(--ink); border-radius: 24px; background: #fff;
+      }
+      .code-card { box-shadow: 12px 12px 0 rgba(90,200,250,0.18); }
+      .ip-card { box-shadow: 12px 12px 0 rgba(183,197,216,0.4); }
+      .code-card img, .ip-card img { display: block; width: 100%; height: 100%; object-fit: cover; }
+      .ip-card img { object-position: center top; }
+      .slot-caption {
+        display: inline-flex; align-items: center; justify-content: center; width: 156px; height: 42px; padding: 0 14px;
+        border: 3px solid var(--ink); border-radius: 16px; background: var(--soft); color: var(--ink); font-size: 18px; font-weight: 900;
+      }
+      .slot-caption.code { transform: translateX(8px); }
+    </style>
+  </head>
+  <body>
+    <main class="frame">
+      <section class="shell">
+        <header class="top-bar">
+          <span class="brand">MINIMAL TECH</span>
+          <span class="date-chip">2026年03月26日</span>
+        </header>
+        <div class="content">
+          <div class="tag-row">
+            <span class="tag">SYSTEM VIEW</span>
+            <span class="tag alt">3:4 RELEASE</span>
+          </div>
+          <section class="hero">
+            <h1 class="title">把重点做成<br />极简科技海报</h1>
+            <div class="metric-card">
+              <span class="mini">SYSTEM</span>
+              <span class="num">3:4</span>
+              <span class="label">发布页结构</span>
+              <span class="sub">适合工具、平台、产品能力、技术方案和路线图摘要。</span>
+              <span class="foot">CLEAN MODE</span>
+            </div>
+          </section>
+          <p class="lead">
+            这套风格像一页克制的科技发布页：标题更利落，指标卡更明确，
+            装饰更少，适合想做得“干净、现代、像产品海报”的内容。
+          </p>
+          <section class="main-grid">
+            <section class="panel">
+              <h2>主信息区</h2>
+              <div class="big-line"><strong>先读结论</strong><span>再看细节</span></div>
+              <div class="card-list">
+                <div class="card"><strong>标题像发布页 headline</strong><span>主标题负责建立第一认知，不要像普通文章标题。</span></div>
+                <div class="card white"><strong>指标卡负责爆点</strong><span>数字、版本、时长、兼容范围都适合收进右上角。</span></div>
+                <div class="card"><strong>导语负责价值</strong><span>先用最短篇幅说清楚是什么、为什么值得看。</span></div>
+              </div>
+            </section>
+            <section class="panel">
+              <h2>辅助信息区</h2>
+              <div class="card-list">
+                <div class="card"><strong>双栏更稳定</strong><span>比起一整段说明，分栏更接近科技发布页的阅读节奏。</span></div>
+                <div class="card white"><strong>底部信息上提</strong><span>项目地址和建议语要抬起来，底部才不会显得空。</span></div>
+                <div class="card"><strong>固定品牌区</strong><span>二维码和卡卡 IP 一直保留，保证每张图都能被识别和联系。</span></div>
+              </div>
+            </section>
+          </section>
+          <section class="feature-band">
+            <div class="feature"><strong>更克制</strong><span>少装饰，多层级</span></div>
+            <div class="feature"><strong>更现代</strong><span>像产品发布页而不是普通海报</span></div>
+            <div class="feature"><strong>更适合摘要</strong><span>工具、平台、能力介绍都能套</span></div>
+          </section>
+          <footer class="footer">
+            <div class="footer-stack">
+              <span class="footer-note">项目地址：把链接、出处或来源放在这里</span>
+              <span class="footer-note">一句话建议：最后用一句短建议或结论做收尾。</span>
+            </div>
+            <div class="contact-cluster">
+              <div class="code-slot">
+                <span class="code-card"><img src="./contact-code.png" alt="合作交流二维码" /></span>
+                <span class="slot-caption code">合作交流</span>
+              </div>
+              <div class="ip-slot">
+                <span class="ip-card"><img src="./kk-character.jpeg" alt="卡卡 IP 形象" /></span>
+                <span class="slot-caption ip">是卡卡呀</span>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,4 @@
+interface:
+  display_name: "KKStyle Editorial Screenshot"
+  short_description: "Editorial 3:4 posters with fixed date, QR, IP, and screenshot output"
+  default_prompt: "Use $kkstyle-editorial-screenshot to turn my notes into a crisp editorial 3:4 poster with a strong title, top date label, fixed contact QR block, fixed Kaka IP slot, and optional PNG rendering."

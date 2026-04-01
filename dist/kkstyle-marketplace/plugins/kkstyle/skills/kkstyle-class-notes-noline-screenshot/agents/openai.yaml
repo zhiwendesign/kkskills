@@ -1,0 +1,4 @@
+interface:
+  display_name: "KKStyle Class Notes No-Line Screenshot"
+  short_description: "No-line handwritten class-notes 3:4 posters with fixed date, QR, IP, and screenshot output"
+  default_prompt: "Use $kkstyle-class-notes-noline-screenshot to turn my notes into a no-line handwritten class-notes 3:4 poster with highlighted note blocks, a top date label, a fixed contact QR block, a fixed Kaka IP slot, and optional PNG rendering."

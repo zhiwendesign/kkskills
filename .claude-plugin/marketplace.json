@@ -1,0 +1,37 @@
+{
+  "name": "kkstyle-marketplace",
+  "owner": {
+    "name": "KKStyle"
+  },
+  "metadata": {
+    "description": "Marketplace for the KKStyle Claude Code poster plugin",
+    "version": "1.0.0",
+    "pluginRoot": "./plugins"
+  },
+  "plugins": [
+    {
+      "name": "kkstyle",
+      "source": "kkstyle",
+      "description": "Poster-generation skills for Claude Code with 14 HTML-first layouts and optional PNG rendering.",
+      "version": "1.0.0",
+      "author": {
+        "name": "KKStyle"
+      },
+      "keywords": [
+        "poster",
+        "html",
+        "design",
+        "skills",
+        "claude-code"
+      ],
+      "category": "design",
+      "tags": [
+        "poster",
+        "visual",
+        "html",
+        "png"
+      ],
+      "strict": true
+    }
+  ]
+}

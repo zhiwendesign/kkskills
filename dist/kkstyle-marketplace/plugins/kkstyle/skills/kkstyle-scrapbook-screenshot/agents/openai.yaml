@@ -1,0 +1,4 @@
+interface:
+  display_name: "KKStyle Scrapbook Screenshot"
+  short_description: "Warm scrapbook-style 3:4 posters with fixed date, QR, IP, and screenshot output"
+  default_prompt: "Use $kkstyle-scrapbook-screenshot to turn my notes into a warm paper-collage 3:4 poster with a date label, layered note panels, a fixed contact QR block, a fixed Kaka IP slot, and optional PNG rendering."

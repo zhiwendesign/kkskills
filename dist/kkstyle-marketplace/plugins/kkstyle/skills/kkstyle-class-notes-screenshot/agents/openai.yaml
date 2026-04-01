@@ -1,0 +1,4 @@
+interface:
+  display_name: "KKStyle Class Notes Screenshot"
+  short_description: "Handwritten class-notes 3:4 posters with fixed date, QR, IP, and screenshot output"
+  default_prompt: "Use $kkstyle-class-notes-screenshot to turn my notes into a handwritten class-notes 3:4 poster with a top date label, highlighted summary blocks, a fixed contact QR block, a fixed Kaka IP slot, and optional PNG rendering."

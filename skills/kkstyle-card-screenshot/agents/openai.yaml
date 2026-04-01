@@ -1,4 +1,0 @@
-interface:
-  display_name: "KKStyle Card Screenshot"
-  short_description: "Cute seal-style 3:4 posters with fixed date, fixed QR, fixed IP, and screenshot output"
-  default_prompt: "Use $kkstyle-card-screenshot to turn my notes into a playful blue seal-style 3:4 poster with a breakout highlight card, a top date chip, lifted footer notes, a fixed contact QR block, a fixed Kaka IP slot, and optional PNG rendering."

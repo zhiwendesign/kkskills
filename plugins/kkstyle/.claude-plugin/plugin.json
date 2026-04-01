@@ -1,0 +1,15 @@
+{
+  "name": "kkstyle",
+  "version": "1.0.0",
+  "description": "KKStyle poster-generation skills for Claude Code. Includes 14 HTML-first poster skills with optional PNG rendering.",
+  "author": {
+    "name": "KKStyle"
+  },
+  "keywords": [
+    "claude-code",
+    "skills",
+    "poster",
+    "html",
+    "design"
+  ]
+}

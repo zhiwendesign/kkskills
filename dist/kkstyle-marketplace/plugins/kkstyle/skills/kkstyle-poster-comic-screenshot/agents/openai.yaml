@@ -1,0 +1,4 @@
+interface:
+  display_name: "KKStyle Poster Comic Screenshot"
+  short_description: "Comic poster 3:4 layouts with fixed date, QR, IP, and screenshot output"
+  default_prompt: "Use $kkstyle-poster-comic-screenshot to turn my notes into a comic poster 3:4 layout with a top date sticker, a loud highlight card, a fixed contact QR block, a fixed Kaka IP slot, and optional PNG rendering."

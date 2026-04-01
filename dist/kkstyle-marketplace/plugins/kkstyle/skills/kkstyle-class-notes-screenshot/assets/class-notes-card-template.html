@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KKStyle Class Notes Template</title>
+    <style>
+      :root {
+        --canvas-width: 1500px;
+        --canvas-height: 2000px;
+        --paper: #fffef7;
+        --ink: #48434d;
+        --line: #c9d6ff;
+        --blue: #4b73ff;
+        --pink: #ff7aa8;
+        --yellow: #ffe76a;
+        --green: #7de3b1;
+        --outline: 3px;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; width: 100%; height: 100%; background: var(--paper); }
+      body { font-family: "Comic Sans MS", "Marker Felt", "Kaiti SC", "PingFang SC", sans-serif; }
+      .frame {
+        position: relative;
+        width: var(--canvas-width);
+        height: var(--canvas-height);
+        overflow: hidden;
+        background:
+          linear-gradient(var(--line) 2px, transparent 2px),
+          linear-gradient(90deg, rgba(75, 115, 255, 0.08) 2px, transparent 2px),
+          linear-gradient(180deg, #fffef9, var(--paper));
+        background-size: 100% 52px, 52px 100%, auto;
+      }
+      .margin-line {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 118px;
+        width: 4px;
+        background: rgba(255, 122, 168, 0.42);
+      }
+      .date-chip {
+        position: absolute;
+        top: 64px;
+        right: 92px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 250px;
+        height: 72px;
+        padding: 0 22px;
+        border: var(--outline) solid var(--ink);
+        border-radius: 999px;
+        background: #fff;
+        color: var(--ink);
+        font-size: 26px;
+        font-weight: 900;
+        box-shadow: 8px 8px 0 rgba(75, 115, 255, 0.24);
+        transform: rotate(2deg);
+      }
+      .date-chip::before {
+        content: "";
+        width: 18px;
+        height: 18px;
+        margin-right: 14px;
+        border: 3px solid var(--ink);
+        border-radius: 50%;
+        background: var(--yellow);
+      }
+      .content {
+        position: absolute;
+        inset: 72px 76px 70px 148px;
+        display: grid;
+        grid-template-rows: auto auto auto 1fr auto auto;
+        gap: 18px;
+      }
+      .subject-row { display: flex; gap: 12px; align-items: center; }
+      .subject {
+        display: inline-flex; align-items: center; justify-content: center;
+        min-height: 42px; padding: 0 16px; border: var(--outline) solid var(--ink);
+        border-radius: 16px; font-size: 20px; font-weight: 900; color: var(--ink); background: #fff;
+      }
+      .subject.blue { background: #e8efff; }
+      .subject.yellow { background: #fff8c9; }
+      .hero {
+        display: grid; grid-template-columns: 1fr 270px; gap: 18px; align-items: start;
+      }
+      .title {
+        margin: 0;
+        color: var(--ink);
+        font-size: 92px;
+        line-height: 1.02;
+        font-weight: 900;
+        transform: rotate(-1deg);
+      }
+      .score-card {
+        padding: 18px 18px 16px;
+        border: var(--outline) solid var(--ink);
+        border-radius: 24px;
+        background: #fff;
+        box-shadow: 12px 12px 0 rgba(255, 122, 168, 0.28);
+        display: grid;
+        gap: 8px;
+        transform: rotate(3deg);
+      }
+      .score-card .mini { font-size: 24px; font-weight: 900; color: var(--blue); }
+      .score-card .num { font-size: 94px; line-height: 0.9; font-weight: 900; }
+      .score-card .label { font-size: 28px; font-weight: 900; }
+      .score-card .sub { font-size: 19px; line-height: 1.26; font-weight: 700; }
+      .score-card .foot {
+        display: inline-flex; align-items: center; justify-content: center;
+        min-height: 38px; padding: 6px 12px; border: 3px solid var(--ink); border-radius: 12px;
+        background: #f3f7ff; font-size: 18px; font-weight: 900;
+      }
+      .highlight {
+        padding: 16px 20px;
+        border: var(--outline) solid var(--ink);
+        border-radius: 20px;
+        background: linear-gradient(transparent 0 34%, rgba(255,231,106,0.76) 34% 82%, transparent 82%);
+        color: var(--ink);
+        font-size: 29px;
+        line-height: 1.38;
+        font-weight: 800;
+      }
+      .main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+      .panel {
+        padding: 18px 18px 16px;
+        border: var(--outline) dashed var(--ink);
+        border-radius: 24px;
+        background: rgba(255,255,255,0.88);
+        display: grid;
+        grid-template-rows: auto auto 1fr auto;
+        gap: 12px;
+      }
+      .panel h2, .panel p { margin: 0; }
+      .panel h2 { font-size: 34px; line-height: 1; font-weight: 900; color: var(--ink); }
+      .panel p { font-size: 23px; line-height: 1.42; color: var(--ink); }
+      .big-line { display: flex; align-items: flex-end; gap: 10px; margin-bottom: 6px; }
+      .big-line strong { font-size: 76px; line-height: 0.9; font-weight: 900; }
+      .big-line span { font-size: 27px; font-weight: 800; }
+      .note-list { display: grid; gap: 12px; }
+      .note {
+        padding: 14px 16px;
+        border: var(--outline) solid var(--ink);
+        border-radius: 18px;
+        background: #fff;
+      }
+      .note strong { display: block; margin-bottom: 4px; font-size: 22px; line-height: 1.1; font-weight: 900; }
+      .note span { display: block; font-size: 19px; line-height: 1.34; font-weight: 700; }
+      .note.blue { background: #edf2ff; }
+      .note.green { background: #ebfff4; }
+      .note.yellow { background: #fffbdc; }
+      .feature-band { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+      .feature {
+        min-height: 78px; padding: 12px 14px; border: var(--outline) solid var(--ink);
+        border-radius: 18px; display: grid; align-content: center; gap: 4px; background: #fff;
+      }
+      .feature strong { display: block; font-size: 21px; line-height: 1; font-weight: 900; }
+      .feature span { display: block; font-size: 18px; line-height: 1.22; font-weight: 700; }
+      .feature.blue { background: #edf2ff; }
+      .feature.green { background: #ebfff4; }
+      .feature.yellow { background: #fffbdc; }
+      .footer { display: flex; justify-content: space-between; gap: 18px; align-items: flex-end; }
+      .footer-stack { display: flex; flex-direction: column; gap: 10px; flex: 1 1 auto; transform: translateY(-28px); }
+      .footer-note {
+        padding: 10px 14px; border: var(--outline) solid var(--ink); border-radius: 18px;
+        background: #fff; color: var(--ink); font-size: 18px; font-weight: 700;
+      }
+      .contact-cluster { display: flex; align-items: flex-end; gap: 18px; transform: translate(-4px, -12px); position: relative; z-index: 8; }
+      .code-slot, .ip-slot { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+      .code-slot { transform: translateY(-12px); }
+      .ip-slot { transform: translate(-2px, -14px); }
+      .code-card, .ip-card {
+        width: 168px; height: 168px; overflow: hidden; border: var(--outline) solid var(--ink);
+        border-radius: 24px; background: #fff;
+      }
+      .code-card { box-shadow: 12px 12px 0 rgba(75,115,255,0.24); }
+      .ip-card { box-shadow: 12px 12px 0 rgba(255,122,168,0.22); }
+      .code-card img, .ip-card img { display: block; width: 100%; height: 100%; object-fit: cover; }
+      .ip-card img { object-position: center top; }
+      .slot-caption {
+        display: inline-flex; align-items: center; justify-content: center;
+        width: 156px; height: 42px; padding: 0 14px; border: 3px solid var(--ink);
+        border-radius: 16px; background: #fff; color: var(--ink); font-size: 18px; font-weight: 900;
+      }
+      .slot-caption.code { transform: translateX(8px); }
+    </style>
+  </head>
+  <body>
+    <main class="frame">
+      <div class="margin-line"></div>
+      <span class="date-chip">2026年03月26日</span>
+      <div class="content">
+        <div class="subject-row">
+          <span class="subject blue">CLASS NOTES</span>
+          <span class="subject yellow">SUMMARY PAGE</span>
+        </div>
+        <section class="hero">
+          <h1 class="title">把重点写成<br />课堂笔记海报</h1>
+          <div class="score-card">
+            <span class="mini">LESSON</span>
+            <span class="num">3:4</span>
+            <span class="label">高亮总结页</span>
+            <span class="sub">适合课程、方法论、工具推荐和学习型海报内容。</span>
+            <span class="foot">MARKER MODE</span>
+          </div>
+        </section>
+        <p class="highlight">
+          这套风格像一页整理得很清楚的课堂笔记：标题像粗记号笔写出来，
+          重点用荧光标出来，正文拆成两栏小块，更像“会被人收藏的笔记页”。
+        </p>
+        <section class="main-grid">
+          <section class="panel">
+            <h2>主知识点</h2>
+            <div class="big-line"><strong>先记重点</strong><span>再看展开</span></div>
+            <div class="note-list">
+              <div class="note blue"><strong>标题像笔记题目</strong><span>主标题要像老师板书里的重点，不要像普通网页大字。</span></div>
+              <div class="note green"><strong>摘要像高亮句</strong><span>先用一句话告诉读者这是什么、为什么值得看。</span></div>
+              <div class="note yellow"><strong>正文像笔记框</strong><span>把长内容拆成小结论块，而不是写成长段说明。</span></div>
+            </div>
+          </section>
+          <section class="panel">
+            <h2>辅助知识点</h2>
+            <div class="note-list">
+              <div class="note blue"><strong>双栏更稳定</strong><span>一栏放主观点，一栏放适合谁、怎么用、补充说明。</span></div>
+              <div class="note green"><strong>底部信息上提</strong><span>项目地址和建议语要抬起来，底部才不会发空。</span></div>
+              <div class="note yellow"><strong>固定品牌区</strong><span>二维码和卡卡 IP 一直保留，让每张图都有统一出处。</span></div>
+            </div>
+          </section>
+        </section>
+        <section class="feature-band">
+          <div class="feature blue"><strong>更像笔记</strong><span>方格纸、标记线、手写感标题</span></div>
+          <div class="feature green"><strong>更适合学习</strong><span>课程、方法、清单都能套</span></div>
+          <div class="feature yellow"><strong>更容易收藏</strong><span>像一页被认真整理过的总结</span></div>
+        </section>
+        <footer class="footer">
+          <div class="footer-stack">
+            <span class="footer-note">项目地址：把链接、出处或来源放在这里</span>
+            <span class="footer-note">一句话建议：最后用一句短建议或结论做收尾。</span>
+          </div>
+          <div class="contact-cluster">
+            <div class="code-slot">
+              <span class="code-card"><img src="./contact-code.png" alt="合作交流二维码" /></span>
+              <span class="slot-caption code">合作交流</span>
+            </div>
+            <div class="ip-slot">
+              <span class="ip-card"><img src="./kk-character.jpeg" alt="卡卡 IP 形象" /></span>
+              <span class="slot-caption ip">是卡卡呀</span>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </main>
+  </body>
+</html>

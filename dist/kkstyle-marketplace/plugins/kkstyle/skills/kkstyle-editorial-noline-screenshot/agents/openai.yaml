@@ -1,0 +1,4 @@
+interface:
+  display_name: "KKStyle Editorial No-Line Screenshot"
+  short_description: "No-line editorial 3:4 posters with fixed date, QR, IP, and screenshot output"
+  default_prompt: "Use $kkstyle-editorial-noline-screenshot to turn my notes into a no-line editorial 3:4 poster with restrained structure, a top date label, a fixed contact QR block, a fixed Kaka IP slot, and optional PNG rendering."

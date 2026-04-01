@@ -1,0 +1,711 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KKStyle Scrapbook Template</title>
+    <style>
+      :root {
+        --canvas-width: 1500px;
+        --canvas-height: 2000px;
+        --paper-bg: #efe2cc;
+        --paper-bg-2: #f6ead8;
+        --paper-main: #fff8ef;
+        --paper-note: #fff3e0;
+        --paper-note-2: #f5efdf;
+        --ink: #51463b;
+        --olive: #8e9b63;
+        --terracotta: #d5845a;
+        --tape: #ead6a7;
+        --brown: #b77a4a;
+        --outline: 3px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--paper-bg);
+      }
+
+      body {
+        font-family: "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+      }
+
+      .frame {
+        position: relative;
+        width: var(--canvas-width);
+        height: var(--canvas-height);
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 18% 15%, rgba(255, 255, 255, 0.65), transparent 22%),
+          radial-gradient(circle at 84% 10%, rgba(255, 255, 255, 0.45), transparent 18%),
+          linear-gradient(rgba(184, 155, 117, 0.12) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(184, 155, 117, 0.08) 1px, transparent 1px),
+          linear-gradient(180deg, var(--paper-bg-2), var(--paper-bg));
+        background-size:
+          auto,
+          auto,
+          42px 42px,
+          42px 42px,
+          auto;
+      }
+
+      .wash {
+        position: absolute;
+        border-radius: 999px;
+        opacity: 0.34;
+        filter: blur(4px);
+      }
+
+      .wash.one {
+        top: 96px;
+        left: 82px;
+        width: 280px;
+        height: 130px;
+        background: rgba(213, 132, 90, 0.28);
+        transform: rotate(-8deg);
+      }
+
+      .wash.two {
+        right: 110px;
+        bottom: 180px;
+        width: 340px;
+        height: 150px;
+        background: rgba(142, 155, 99, 0.22);
+        transform: rotate(12deg);
+      }
+
+      .stack-back,
+      .stack-mid,
+      .sheet {
+        position: absolute;
+        inset: 124px 88px 88px;
+        border: var(--outline) solid var(--ink);
+        border-radius: 38px;
+      }
+
+      .stack-back {
+        background: #e4d4bf;
+        transform: rotate(-2.2deg);
+        box-shadow: 0 26px 0 rgba(44, 36, 29, 0.28);
+      }
+
+      .stack-mid {
+        inset: 114px 92px 96px;
+        background: #f3e4cf;
+        transform: rotate(1.4deg);
+      }
+
+      .sheet {
+        background: linear-gradient(180deg, #fffaf2, var(--paper-main));
+        box-shadow: 0 16px 0 rgba(81, 70, 59, 0.14);
+        overflow: visible;
+      }
+
+      .tape {
+        position: absolute;
+        width: 138px;
+        height: 44px;
+        border: 3px solid rgba(44, 36, 29, 0.18);
+        background: rgba(234, 214, 167, 0.78);
+        border-radius: 10px;
+      }
+
+      .tape.left {
+        top: -18px;
+        left: 170px;
+        transform: rotate(-8deg);
+      }
+
+      .tape.right {
+        top: -14px;
+        right: 196px;
+        transform: rotate(7deg);
+      }
+
+      .date-chip {
+        position: absolute;
+        top: 82px;
+        right: 118px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 250px;
+        height: 72px;
+        padding: 0 24px;
+        border: var(--outline) solid var(--ink);
+        border-radius: 999px;
+        background: #fff1c6;
+        color: var(--ink);
+        font-family: "Georgia", "Songti SC", serif;
+        font-size: 27px;
+        font-weight: 700;
+        box-shadow: 10px 10px 0 rgba(142, 155, 99, 0.55);
+        transform: rotate(4deg);
+        z-index: 8;
+      }
+
+      .date-chip::before {
+        content: "";
+        width: 18px;
+        height: 18px;
+        margin-right: 14px;
+        border: 3px solid var(--ink);
+        border-radius: 50%;
+        background: var(--olive);
+        flex: 0 0 auto;
+      }
+
+      .content {
+        position: absolute;
+        inset: 88px 42px 42px;
+        display: grid;
+        grid-template-rows: auto auto auto 1fr auto auto;
+        gap: 18px;
+      }
+
+      .kicker-row {
+        display: flex;
+        gap: 14px;
+        align-items: center;
+      }
+
+      .kicker {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 46px;
+        padding: 10px 18px;
+        border: var(--outline) solid var(--ink);
+        border-radius: 18px;
+        background: var(--paper-note);
+        color: var(--ink);
+        font-size: 23px;
+        font-weight: 900;
+        box-shadow: 8px 8px 0 rgba(183, 122, 74, 0.22);
+      }
+
+      .kicker.alt {
+        background: #edf3da;
+        transform: rotate(-3deg);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1fr 286px;
+        gap: 20px;
+        align-items: start;
+      }
+
+      .title-note {
+        position: relative;
+        padding: 28px 28px 22px;
+        border: var(--outline) solid var(--ink);
+        border-radius: 30px;
+        background: #fff8ee;
+        box-shadow: 0 14px 0 rgba(44, 36, 29, 0.16);
+        transform: rotate(-1.4deg);
+      }
+
+      .title-note::before {
+        content: "";
+        position: absolute;
+        top: -16px;
+        left: 42px;
+        width: 124px;
+        height: 34px;
+        border: 3px solid rgba(44, 36, 29, 0.2);
+        border-radius: 10px;
+        background: rgba(234, 214, 167, 0.75);
+        transform: rotate(-7deg);
+      }
+
+      .title {
+        margin: 0;
+        color: var(--ink);
+        font-family: "Georgia", "Songti SC", serif;
+        font-size: 86px;
+        line-height: 1.02;
+        letter-spacing: -0.03em;
+        font-weight: 700;
+      }
+
+      .highlight-card {
+        position: relative;
+        padding: 18px 18px 16px;
+        border: var(--outline) solid var(--ink);
+        border-radius: 30px;
+        background: linear-gradient(180deg, #fbf1dd, #fff9ef);
+        color: var(--ink);
+        box-shadow: 14px 14px 0 rgba(213, 132, 90, 0.45);
+        transform: rotate(3.4deg);
+        display: grid;
+        gap: 8px;
+      }
+
+      .highlight-card::before {
+        content: "";
+        position: absolute;
+        top: -18px;
+        right: 28px;
+        width: 112px;
+        height: 30px;
+        border: 3px solid rgba(44, 36, 29, 0.18);
+        border-radius: 10px;
+        background: rgba(234, 214, 167, 0.76);
+        transform: rotate(7deg);
+      }
+
+      .highlight-card .mini {
+        font-size: 24px;
+        line-height: 1;
+        font-weight: 900;
+      }
+
+      .highlight-card .num {
+        display: block;
+        font-family: "Georgia", "Songti SC", serif;
+        font-size: 92px;
+        line-height: 0.9;
+        font-weight: 700;
+      }
+
+      .highlight-card .label {
+        font-size: 28px;
+        font-weight: 900;
+      }
+
+      .highlight-card .sub {
+        font-size: 19px;
+        line-height: 1.26;
+        font-weight: 700;
+      }
+
+      .highlight-card .foot {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 38px;
+        padding: 6px 12px;
+        border: 3px solid var(--ink);
+        border-radius: 14px;
+        background: #fff;
+        font-size: 18px;
+        font-weight: 900;
+      }
+
+      .lead-strip {
+        padding: 18px 22px;
+        border: var(--outline) solid var(--ink);
+        border-radius: 24px;
+        background: var(--paper-note-2);
+        color: var(--ink);
+        font-size: 29px;
+        line-height: 1.38;
+        box-shadow: 10px 10px 0 rgba(142, 155, 99, 0.26);
+        transform: rotate(0.6deg);
+      }
+
+      .main-grid {
+        display: grid;
+        grid-template-columns: 1.04fr 0.96fr;
+        gap: 22px;
+        align-items: stretch;
+      }
+
+      .paper-panel {
+        position: relative;
+        padding: 28px 24px 22px;
+        border: var(--outline) solid var(--ink);
+        border-radius: 26px;
+        background: #fff9f0;
+        display: grid;
+        grid-template-rows: auto auto 1fr auto;
+        gap: 12px;
+        min-height: 100%;
+      }
+
+      .paper-panel::before {
+        content: "";
+        position: absolute;
+        top: -16px;
+        left: 32px;
+        width: 104px;
+        height: 28px;
+        border: 3px solid rgba(44, 36, 29, 0.18);
+        border-radius: 10px;
+        background: rgba(234, 214, 167, 0.76);
+        transform: rotate(-6deg);
+      }
+
+      .paper-panel.warm {
+        background: #fff3e6;
+      }
+
+      .paper-panel h2,
+      .paper-panel p {
+        margin: 0;
+      }
+
+      .paper-panel h2 {
+        color: var(--ink);
+        font-family: "Georgia", "Songti SC", serif;
+        font-size: 35px;
+        line-height: 1;
+        font-weight: 700;
+      }
+
+      .paper-panel p {
+        color: var(--ink);
+        font-size: 23px;
+        line-height: 1.42;
+      }
+
+      .big-line {
+        display: flex;
+        align-items: flex-end;
+        gap: 10px;
+      }
+
+      .big-line strong {
+        font-family: "Georgia", "Songti SC", serif;
+        font-size: 76px;
+        line-height: 0.9;
+        font-weight: 700;
+      }
+
+      .big-line span {
+        font-size: 27px;
+        font-weight: 800;
+      }
+
+      .note-list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .note-item,
+      .panel-tail {
+        padding: 14px 16px;
+        border: 3px solid var(--ink);
+        border-radius: 18px;
+      }
+
+      .note-item strong,
+      .panel-tail strong {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 22px;
+        line-height: 1.1;
+        font-weight: 900;
+      }
+
+      .note-item span,
+      .panel-tail span {
+        display: block;
+        font-size: 19px;
+        line-height: 1.33;
+        font-weight: 700;
+      }
+
+      .note-item.tan,
+      .panel-tail.tan {
+        background: #f8ead6;
+      }
+
+      .note-item.green,
+      .panel-tail.green {
+        background: #eef3de;
+      }
+
+      .note-item.orange {
+        background: #fde9dc;
+      }
+
+      .feature-band {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+      }
+
+      .feature-tag {
+        padding: 14px 14px 12px;
+        border: var(--outline) solid var(--ink);
+        border-radius: 18px;
+        min-height: 82px;
+        display: grid;
+        align-content: center;
+        gap: 4px;
+        color: var(--ink);
+      }
+
+      .feature-tag strong {
+        display: block;
+        font-size: 21px;
+        line-height: 1;
+        font-weight: 900;
+      }
+
+      .feature-tag span {
+        display: block;
+        font-size: 18px;
+        line-height: 1.22;
+        font-weight: 700;
+      }
+
+      .feature-tag.tan {
+        background: #f7ead7;
+      }
+
+      .feature-tag.green {
+        background: #edf4dc;
+      }
+
+      .feature-tag.orange {
+        background: #fbe4d8;
+      }
+
+      .footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 18px;
+        align-items: flex-end;
+      }
+
+      .footer-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        flex: 1 1 auto;
+        transform: translateY(-28px);
+      }
+
+      .footer-note {
+        padding: 10px 14px;
+        border: var(--outline) solid var(--ink);
+        border-radius: 18px;
+        background: #f7ead7;
+        color: var(--ink);
+        font-size: 18px;
+        font-weight: 700;
+      }
+
+      .contact-cluster {
+        display: flex;
+        align-items: flex-end;
+        gap: 18px;
+        transform: translate(-4px, -12px);
+        position: relative;
+        z-index: 8;
+      }
+
+      .code-slot,
+      .ip-slot {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .code-slot {
+        transform: translateY(-12px);
+      }
+
+      .ip-slot {
+        transform: translate(-2px, -14px);
+      }
+
+      .code-card,
+      .ip-card {
+        width: 168px;
+        height: 168px;
+        overflow: hidden;
+        border: var(--outline) solid var(--ink);
+        border-radius: 26px;
+        background: #fff;
+      }
+
+      .code-card {
+        box-shadow: 12px 12px 0 rgba(142, 155, 99, 0.48);
+        transform: rotate(-4deg);
+      }
+
+      .ip-card {
+        box-shadow: 12px 12px 0 rgba(213, 132, 90, 0.42);
+        transform: rotate(3deg);
+      }
+
+      .code-card img,
+      .ip-card img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .ip-card img {
+        object-position: center top;
+      }
+
+      .slot-caption {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 156px;
+        height: 42px;
+        padding: 0 14px;
+        border: 3px solid var(--ink);
+        border-radius: 16px;
+        color: var(--ink);
+        font-size: 18px;
+        font-weight: 900;
+        line-height: 1;
+        background: #fff8ef;
+      }
+
+      .slot-caption.code {
+        box-shadow: 6px 6px 0 rgba(142, 155, 99, 0.42);
+        transform: translateX(8px) rotate(-2deg);
+      }
+
+      .slot-caption.ip {
+        box-shadow: 6px 6px 0 rgba(213, 132, 90, 0.36);
+        transform: rotate(2deg);
+      }
+    </style>
+  </head>
+  <body>
+    <main class="frame">
+      <div class="wash one"></div>
+      <div class="wash two"></div>
+
+      <section class="stack-back"></section>
+      <section class="stack-mid"></section>
+      <section class="sheet">
+        <span class="tape left"></span>
+        <span class="tape right"></span>
+        <span class="date-chip">2026年03月26日</span>
+
+        <div class="content">
+          <div class="kicker-row">
+            <span class="kicker">SCRAPBOOK</span>
+            <span class="kicker alt">COZY POSTER</span>
+          </div>
+
+          <section class="hero">
+            <div class="title-note">
+              <h1 class="title">把重点做成<br />更温暖的拼贴海报</h1>
+            </div>
+
+            <div class="highlight-card">
+              <span class="mini">默认</span>
+              <span class="num">3:4</span>
+              <span class="label">纸感信息板</span>
+              <span class="sub">适合课程摘要、工具推荐、复盘笔记和带情绪温度的分享海报。</span>
+              <span class="foot">便签 + 拼贴</span>
+            </div>
+          </section>
+
+          <p class="lead-strip">
+            这套风格更像一本手账或杂志拼贴页，不靠亮蓝贴纸，而是靠纸张层次、
+            胶带感和便签结构把信息组织得更温暖。
+          </p>
+
+          <section class="main-grid">
+            <section class="paper-panel">
+              <h2>主信息纸</h2>
+              <div class="big-line">
+                <strong>先抓重点</strong>
+                <span>再展开阅读</span>
+              </div>
+              <div class="note-list">
+                <div class="note-item tan">
+                  <strong>主标题像便签</strong>
+                  <span>标题应该像贴上去的主卡，而不是普通网页大字。</span>
+                </div>
+                <div class="note-item green">
+                  <strong>摘要像纸条</strong>
+                  <span>先用一句话讲“是什么”和“为什么值得看”。</span>
+                </div>
+                <div class="note-item orange">
+                  <strong>正文拆到不同纸片</strong>
+                  <span>长内容先做分组，再落到多张便签或纸板上。</span>
+                </div>
+              </div>
+              <div class="panel-tail tan">
+                <strong>留白策略</strong>
+                <span>空就补纸条或说明卡，不要只把标题做得更大。</span>
+              </div>
+            </section>
+
+            <section class="paper-panel warm">
+              <h2>辅助信息纸</h2>
+              <div class="note-list">
+                <div class="note-item tan">
+                  <strong>右上角重点卡</strong>
+                  <span>放数字、时长、关键词或最值得记住的结论。</span>
+                </div>
+                <div class="note-item green">
+                  <strong>下方说明纸</strong>
+                  <span>适合放适合谁看、怎么用、项目地址、结论建议。</span>
+                </div>
+                <div class="note-item orange">
+                  <strong>固定品牌区</strong>
+                  <span>右下角一直保留二维码和卡卡 IP，让每张海报都像同一套作品。</span>
+                </div>
+              </div>
+              <div class="panel-tail green">
+                <strong>适合内容</strong>
+                <span>适合想做得更有人味、更像手账整理页的推荐和总结海报。</span>
+              </div>
+            </section>
+          </section>
+
+          <section class="feature-band">
+            <div class="feature-tag tan">
+              <strong>更温暖</strong>
+              <span>纸张色取代冷白卡</span>
+            </div>
+            <div class="feature-tag green">
+              <strong>更有手作感</strong>
+              <span>胶带、纸条、叠页和轻旋转</span>
+            </div>
+            <div class="feature-tag orange">
+              <strong>更适合分享</strong>
+              <span>像笔记页，也像杂志摘要页</span>
+            </div>
+          </section>
+
+          <footer class="footer">
+            <div class="footer-stack">
+              <span class="footer-note">项目地址：把链接、出处或来源放在这里</span>
+              <span class="footer-note">一句话建议：最后用一句短建议或结论做收尾。</span>
+            </div>
+
+            <div class="contact-cluster">
+              <div class="code-slot">
+                <span class="code-card">
+                  <img src="./contact-code.png" alt="合作交流二维码" />
+                </span>
+                <span class="slot-caption code">合作交流</span>
+              </div>
+
+              <div class="ip-slot">
+                <span class="ip-card">
+                  <img src="./kk-character.jpeg" alt="卡卡 IP 形象" />
+                </span>
+                <span class="slot-caption ip">是卡卡呀</span>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

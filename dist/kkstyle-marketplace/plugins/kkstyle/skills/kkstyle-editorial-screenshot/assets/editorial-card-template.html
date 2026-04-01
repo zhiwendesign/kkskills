@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KKStyle Editorial Template</title>
+    <style>
+      :root {
+        --canvas-width: 1500px;
+        --canvas-height: 2000px;
+        --bg: #f3efe6;
+        --paper: #fcf8f1;
+        --ink: #3a322c;
+        --muted: #8a8379;
+        --accent: #8f2f24;
+        --soft: #ddd1c2;
+        --outline: 3px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--bg);
+      }
+
+      body {
+        font-family: "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+      }
+
+      .frame {
+        position: relative;
+        width: var(--canvas-width);
+        height: var(--canvas-height);
+        overflow: hidden;
+        background:
+          linear-gradient(rgba(22, 19, 16, 0.05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(22, 19, 16, 0.04) 1px, transparent 1px),
+          linear-gradient(180deg, #f7f2ea, var(--bg));
+        background-size: 44px 44px, 44px 44px, auto;
+      }
+
+      .border {
+        position: absolute;
+        inset: 42px;
+        border: var(--outline) solid var(--ink);
+      }
+
+      .masthead {
+        position: absolute;
+        top: 48px;
+        left: 74px;
+        right: 74px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 5;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--ink);
+        font-size: 26px;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+      }
+
+      .brand::before {
+        content: "";
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: var(--accent);
+      }
+
+      .date-chip {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 248px;
+        height: 72px;
+        padding: 0 24px;
+        border: var(--outline) solid var(--ink);
+        border-radius: 999px;
+        background: #fff;
+        color: var(--ink);
+        font-family: "Georgia", "Songti SC", serif;
+        font-size: 27px;
+        font-weight: 700;
+        box-shadow: 10px 10px 0 rgba(143, 47, 36, 0.22);
+      }
+
+      .date-chip::before {
+        content: "";
+        width: 18px;
+        height: 18px;
+        margin-right: 14px;
+        border: 3px solid var(--ink);
+        border-radius: 50%;
+        background: var(--accent);
+        flex: 0 0 auto;
+      }
+
+      .content {
+        position: absolute;
+        inset: 148px 78px 78px;
+        display: grid;
+        grid-template-rows: auto auto 1fr auto auto;
+        gap: 24px;
+      }
+
+      .section-kicker {
+        display: flex;
+        gap: 14px;
+        align-items: center;
+      }
+
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 42px;
+        padding: 8px 16px;
+        border: var(--outline) solid var(--ink);
+        border-radius: 999px;
+        font-size: 20px;
+        font-weight: 900;
+        color: var(--ink);
+        background: #fff;
+      }
+
+      .chip.alt {
+        background: #efe6db;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1fr 280px;
+        gap: 24px;
+        align-items: start;
+      }
+
+      .title-block {
+        padding-right: 18px;
+        border-top: 4px solid var(--ink);
+        padding-top: 24px;
+      }
+
+      .title {
+        margin: 0;
+        color: var(--ink);
+        font-family: "Georgia", "Songti SC", serif;
+        font-size: 92px;
+        line-height: 1.01;
+        letter-spacing: -0.04em;
+        font-weight: 700;
+      }
+
+      .highlight-card {
+        padding: 20px 18px 18px;
+        border: var(--outline) solid var(--ink);
+        border-radius: 28px;
+        background: #fff;
+        box-shadow: 14px 14px 0 rgba(143, 47, 36, 0.28);
+        display: grid;
+        gap: 8px;
+      }
+
+      .highlight-card .mini {
+        font-size: 24px;
+        line-height: 1;
+        font-weight: 900;
+        color: var(--accent);
+      }
+
+      .highlight-card .num {
+        display: block;
+        font-family: "Georgia", "Songti SC", serif;
+        font-size: 96px;
+        line-height: 0.9;
+        font-weight: 700;
+        color: var(--ink);
+      }
+
+      .highlight-card .label {
+        display: block;
+        font-size: 28px;
+        font-weight: 900;
+      }
+
+      .highlight-card .sub {
+        font-size: 20px;
+        line-height: 1.24;
+        font-weight: 700;
+      }
+
+      .highlight-card .foot {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 38px;
+        padding: 6px 12px;
+        border: 3px solid var(--ink);
+        border-radius: 12px;
+        background: #f7f2eb;
+        font-size: 18px;
+        font-weight: 900;
+      }
+
+      .lead {
+        padding: 18px 0 0;
+        border-top: 4px solid var(--soft);
+        color: var(--ink);
+        font-size: 31px;
+        line-height: 1.36;
+        font-weight: 600;
+      }
+
+      .main-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 26px;
+      }
+
+      .column {
+        display: grid;
+        align-content: start;
+        gap: 16px;
+      }
+
+      .panel {
+        padding: 18px 0 0;
+        border-top: 4px solid var(--ink);
+      }
+
+      .panel h2,
+      .panel p {
+        margin: 0;
+      }
+
+      .panel h2 {
+        color: var(--ink);
+        font-family: "Georgia", "Songti SC", serif;
+        font-size: 37px;
+        line-height: 1;
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+
+      .panel p {
+        color: var(--ink);
+        font-size: 23px;
+        line-height: 1.45;
+      }
+
+      .metric-line {
+        display: flex;
+        align-items: flex-end;
+        gap: 12px;
+        margin-bottom: 8px;
+      }
+
+      .metric-line strong {
+        font-family: "Georgia", "Songti SC", serif;
+        font-size: 74px;
+        line-height: 0.9;
+        font-weight: 700;
+      }
+
+      .metric-line span {
+        font-size: 27px;
+        font-weight: 800;
+      }
+
+      .block-list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .block {
+        padding: 14px 16px;
+        border: var(--outline) solid var(--ink);
+        border-radius: 18px;
+        background: #fff;
+      }
+
+      .block strong {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 22px;
+        line-height: 1.1;
+        font-weight: 900;
+      }
+
+      .block span {
+        display: block;
+        font-size: 19px;
+        line-height: 1.34;
+        font-weight: 700;
+      }
+
+      .block.soft {
+        background: #f5efe7;
+      }
+
+      .block.accent {
+        background: #f7ebe9;
+      }
+
+      .feature-band {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+      }
+
+      .feature {
+        min-height: 82px;
+        padding: 12px 14px;
+        border: var(--outline) solid var(--ink);
+        border-radius: 18px;
+        background: #fff;
+        display: grid;
+        align-content: center;
+        gap: 4px;
+      }
+
+      .feature strong {
+        display: block;
+        font-size: 21px;
+        line-height: 1;
+        font-weight: 900;
+      }
+
+      .feature span {
+        display: block;
+        font-size: 18px;
+        line-height: 1.22;
+        font-weight: 700;
+      }
+
+      .feature.accent {
+        background: #f7ebe9;
+      }
+
+      .footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 18px;
+        align-items: flex-end;
+      }
+
+      .footer-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        flex: 1 1 auto;
+        transform: translateY(-30px);
+      }
+
+      .footer-note {
+        padding: 10px 14px;
+        border: var(--outline) solid var(--ink);
+        border-radius: 18px;
+        background: #fff;
+        color: var(--ink);
+        font-size: 18px;
+        font-weight: 700;
+      }
+
+      .contact-cluster {
+        display: flex;
+        align-items: flex-end;
+        gap: 18px;
+        transform: translate(-4px, -12px);
+      }
+
+      .code-slot,
+      .ip-slot {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .code-slot {
+        transform: translateY(-12px);
+      }
+
+      .ip-slot {
+        transform: translate(-2px, -14px);
+      }
+
+      .code-card,
+      .ip-card {
+        width: 168px;
+        height: 168px;
+        overflow: hidden;
+        border: var(--outline) solid var(--ink);
+        border-radius: 26px;
+        background: #fff;
+      }
+
+      .code-card {
+        box-shadow: 12px 12px 0 rgba(143, 47, 36, 0.16);
+      }
+
+      .ip-card {
+        box-shadow: 12px 12px 0 rgba(138, 131, 121, 0.24);
+      }
+
+      .code-card img,
+      .ip-card img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .ip-card img {
+        object-position: center top;
+      }
+
+      .slot-caption {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 156px;
+        height: 42px;
+        padding: 0 14px;
+        border: 3px solid var(--ink);
+        border-radius: 16px;
+        color: var(--ink);
+        font-size: 18px;
+        font-weight: 900;
+        background: #fff;
+      }
+
+      .slot-caption.code {
+        transform: translateX(8px);
+      }
+    </style>
+  </head>
+  <body>
+    <main class="frame">
+      <div class="border"></div>
+
+      <header class="masthead">
+        <span class="brand">EDITORIAL BOARD</span>
+        <span class="date-chip">2026年03月26日</span>
+      </header>
+
+      <div class="content">
+        <div class="section-kicker">
+          <span class="chip">EDITORIAL</span>
+          <span class="chip alt">3:4 POSTER</span>
+        </div>
+
+        <section class="hero">
+          <div class="title-block">
+            <h1 class="title">把重点做成<br />更利落的编辑海报</h1>
+          </div>
+
+          <div class="highlight-card">
+            <span class="mini">默认</span>
+            <span class="num">3:4</span>
+            <span class="label">杂志页结构</span>
+            <span class="sub">适合资源推荐、课程整理、项目摘要和观点型内容。</span>
+            <span class="foot">清晰分栏</span>
+          </div>
+        </section>
+
+        <p class="lead">
+          这套风格把信息做得更像专题页和杂志封面：标题更强、分栏更清晰、
+          强调更克制，适合想要“利落、有质感”的信息海报。
+        </p>
+
+        <section class="main-grid">
+          <section class="column">
+            <section class="panel">
+              <h2>主结论栏</h2>
+              <div class="metric-line">
+                <strong>先抓主张</strong>
+                <span>再看展开</span>
+              </div>
+              <div class="block-list">
+                <div class="block soft">
+                  <strong>封面式标题</strong>
+                  <span>标题应该像 feature headline，一眼决定读者会不会继续往下看。</span>
+                </div>
+                <div class="block accent">
+                  <strong>导语先讲价值</strong>
+                  <span>在最短篇幅里说清楚“这是什么”和“为什么值得花时间”。</span>
+                </div>
+                <div class="block soft">
+                  <strong>重点牌负责爆点</strong>
+                  <span>数字、阅读时长、分类或一句结论，都适合塞进右上角。</span>
+                </div>
+              </div>
+            </section>
+          </section>
+
+          <section class="column">
+            <section class="panel">
+              <h2>辅助说明栏</h2>
+              <div class="block-list">
+                <div class="block soft">
+                  <strong>双栏更稳</strong>
+                  <span>比起一整段说明，分栏能更好地控制节奏和阅读路径。</span>
+                </div>
+                <div class="block accent">
+                  <strong>来源和建议上提</strong>
+                  <span>底部信息条要抬起来，不要塌在最底边，影响整体完成度。</span>
+                </div>
+                <div class="block soft">
+                  <strong>固定品牌区</strong>
+                  <span>右下角一直带二维码和卡卡 IP，让风格再克制也保持统一识别。</span>
+                </div>
+              </div>
+            </section>
+          </section>
+        </section>
+
+        <section class="feature-band">
+          <div class="feature">
+            <strong>更克制</strong>
+            <span>高对比标题 + 少量强调色</span>
+          </div>
+          <div class="feature accent">
+            <strong>更清晰</strong>
+            <span>适合资讯、观点、工具推荐</span>
+          </div>
+          <div class="feature">
+            <strong>更像刊物</strong>
+            <span>封面感、导语感、分栏感更强</span>
+          </div>
+        </section>
+
+        <footer class="footer">
+          <div class="footer-stack">
+            <span class="footer-note">项目地址：把链接、出处或来源放在这里</span>
+            <span class="footer-note">一句话建议：最后用一句短建议或结论做收尾。</span>
+          </div>
+
+          <div class="contact-cluster">
+            <div class="code-slot">
+              <span class="code-card">
+                <img src="./contact-code.png" alt="合作交流二维码" />
+              </span>
+              <span class="slot-caption code">合作交流</span>
+            </div>
+
+            <div class="ip-slot">
+              <span class="ip-card">
+                <img src="./kk-character.jpeg" alt="卡卡 IP 形象" />
+              </span>
+              <span class="slot-caption ip">是卡卡呀</span>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </main>
+  </body>
+</html>
