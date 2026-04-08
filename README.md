@@ -106,6 +106,18 @@ claude --plugin-dir ./plugins/kkstyle
 | Retro Pixel | [kkstyle-retro-pixel-screenshot](./kkstyle-retro-pixel-screenshot) | [kkstyle-retro-pixel-noline-screenshot](./kkstyle-retro-pixel-noline-screenshot) | 游戏 HUD、像素状态板、掌机风介绍页 |
 | Scrapbook | [kkstyle-scrapbook-screenshot](./kkstyle-scrapbook-screenshot) | [kkstyle-scrapbook-noline-screenshot](./kkstyle-scrapbook-noline-screenshot) | 暖纸拼贴、资源推荐、手账感摘要、生活方式内容 |
 
+## 风格预览图（3:4）
+
+| 风格 | 标准版预览 | `noline` 版预览 |
+| --- | --- | --- |
+| Class Notes | ![Class Notes Standard](./readme-previews/kkstyle-class-notes-screenshot.png) | ![Class Notes Noline](./readme-previews/kkstyle-class-notes-noline-screenshot.png) |
+| Diagram Board | ![Diagram Board Standard](./readme-previews/kkstyle-diagram-board-screenshot.png) | ![Diagram Board Noline](./readme-previews/kkstyle-diagram-board-noline-screenshot.png) |
+| Editorial | ![Editorial Standard](./readme-previews/kkstyle-editorial-screenshot.png) | ![Editorial Noline](./readme-previews/kkstyle-editorial-noline-screenshot.png) |
+| Minimal Tech | ![Minimal Tech Standard](./readme-previews/kkstyle-minimal-tech-screenshot.png) | ![Minimal Tech Noline](./readme-previews/kkstyle-minimal-tech-noline-screenshot.png) |
+| Poster Comic | ![Poster Comic Standard](./readme-previews/kkstyle-poster-comic-screenshot.png) | ![Poster Comic Noline](./readme-previews/kkstyle-poster-comic-noline-screenshot.png) |
+| Retro Pixel | ![Retro Pixel Standard](./readme-previews/kkstyle-retro-pixel-screenshot.png) | ![Retro Pixel Noline](./readme-previews/kkstyle-retro-pixel-noline-screenshot.png) |
+| Scrapbook | ![Scrapbook Standard](./readme-previews/kkstyle-scrapbook-screenshot.png) | ![Scrapbook Noline](./readme-previews/kkstyle-scrapbook-noline-screenshot.png) |
+
 ## 标准版和 `noline` 的区别
 
 - `*-screenshot`：边框、描边、卡片分隔和结构边界更明确，视觉风格更强。
