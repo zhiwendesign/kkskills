@@ -297,9 +297,3 @@ kkstyle-<style>-screenshot/
 - Chrome / Chromium 之一
 - `bash`
 - `python3` 用于 `image_to_data_uri.py`
-
-如果你想继续补全这个仓库，比较自然的下一步通常是：
-
-- 给每个风格都补一份面向人类读者的 `README.md`
-- 增加统一的示例输入 / 输出截图
-- 在根目录补一份风格选型示意图
