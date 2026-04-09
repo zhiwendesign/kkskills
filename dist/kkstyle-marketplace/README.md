@@ -101,6 +101,13 @@ claude --plugin-dir ./plugins/kkstyle
 
 为了把预览图完整展示出来，这里拆成了两张 `3:4` 预览图。两张图都使用统一的示例标题和标签基准，第一张从 `KKSticker` 开始。
 
+## 风格预览（3:4 · noline）
+
+![KKStyle 3:4 Noline 风格预览](./previews/style-preview-3x4-noline.png)
+![KKStyle 3:4 Noline 风格预览 2](./previews/style-preview-3x4-noline-2.png)
+
+`noline` 版也已经统一到同一套示例基准，整体会更轻、更柔和，但标题和标签节奏与标准版保持一致。
+
 ## 风格总览
 
 | 风格 | 标准版 | `noline` 版 | 更适合的内容 |
