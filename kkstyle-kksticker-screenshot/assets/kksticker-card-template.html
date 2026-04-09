@@ -1,0 +1,596 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KKStyle KKSticker Template</title>
+    <style>
+      :root {
+        --canvas-width: 1500px;
+        --canvas-height: 2000px;
+        --bg-blue: #2f78ff;
+        --bg-blue-deep: #2a6be5;
+        --board: #fffdf7;
+        --ink: #2f394b;
+        --yellow: #ffe97c;
+        --lime: #cfff1f;
+        --soft-blue: #dcecff;
+        --soft-blue-2: #edf5ff;
+        --soft-yellow: #fff4b8;
+        --soft-green: #eef9d8;
+        --soft-white: #ffffff;
+        --orange: #ff6a24;
+        --shadow-blue: #9ec7ff;
+        --outline: 5px;
+      }
+
+      * { box-sizing: border-box; }
+
+      html, body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--bg-blue);
+      }
+
+      body {
+        font-family: "Trebuchet MS", "Avenir Next", "PingFang SC", "Noto Sans SC", sans-serif;
+      }
+
+      .frame {
+        position: relative;
+        width: var(--canvas-width);
+        height: var(--canvas-height);
+        overflow: hidden;
+        background:
+          linear-gradient(rgba(255,255,255,0.09) 2px, transparent 2px),
+          linear-gradient(90deg, rgba(255,255,255,0.09) 2px, transparent 2px),
+          linear-gradient(180deg, var(--bg-blue) 0%, var(--bg-blue-deep) 100%);
+        background-size: 42px 42px, 42px 42px, auto;
+      }
+
+      .grid-badge,
+      .grid-corner {
+        position: absolute;
+        display: grid;
+        gap: 8px;
+        z-index: 0;
+      }
+
+      .grid-badge {
+        top: 36px;
+        left: 30px;
+        grid-template-columns: repeat(4, 40px);
+      }
+
+      .grid-corner {
+        right: 28px;
+        bottom: 26px;
+        grid-template-columns: repeat(2, 28px);
+        gap: 6px;
+      }
+
+      .grid-badge span,
+      .grid-corner span {
+        display: block;
+        background: rgba(255,255,255,0.62);
+      }
+
+      .grid-badge span { width: 40px; height: 40px; }
+      .grid-corner span { width: 28px; height: 28px; }
+
+      .board-shell {
+        position: absolute;
+        inset: 146px 52px 54px;
+        border: var(--outline) solid var(--ink);
+        border-radius: 38px;
+        background: var(--board);
+        box-shadow: 20px 20px 0 rgba(0, 0, 0, 0.08);
+        overflow: visible;
+      }
+
+      .ear {
+        position: absolute;
+        top: -128px;
+        width: 170px;
+        height: 188px;
+        border: var(--outline) solid var(--ink);
+        border-bottom: none;
+        border-radius: 86px 86px 0 0;
+        background: var(--board);
+      }
+
+      .ear.left { left: 72px; }
+      .ear.right { left: 470px; }
+
+      .ear::before {
+        content: "";
+        position: absolute;
+        top: 76px;
+        left: 60px;
+        width: 28px;
+        height: 56px;
+        border-radius: 16px;
+        background: var(--ink);
+      }
+
+      .ear::after {
+        content: "";
+        position: absolute;
+        top: -18px;
+        left: 52px;
+        width: 64px;
+        height: 14px;
+        border-top: var(--outline) solid var(--ink);
+        border-radius: 999px;
+      }
+
+      .board-inner {
+        position: relative;
+        height: 100%;
+        padding: 82px 34px 28px;
+        display: grid;
+        grid-template-rows: auto auto auto 1fr auto auto;
+        gap: 22px;
+      }
+
+      .top-row {
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 18px;
+      }
+
+      .tag-row {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .tag,
+      .date-chip,
+      .side-foot,
+      .badge,
+      .slot-caption {
+        border: var(--outline) solid var(--ink);
+        color: var(--ink);
+        font-weight: 900;
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 58px;
+        padding: 0 22px;
+        border-radius: 999px;
+        background: var(--yellow);
+        font-size: 22px;
+        letter-spacing: 0.02em;
+      }
+
+      .tag.lime { background: var(--lime); }
+
+      .date-chip {
+        position: absolute;
+        top: -78px;
+        right: 12px;
+        display: inline-flex;
+        align-items: center;
+        gap: 14px;
+        min-height: 72px;
+        padding: 0 24px;
+        border-radius: 999px;
+        background: #fff2a6;
+        box-shadow: 10px 10px 0 var(--shadow-blue);
+        transform: rotate(-3deg);
+        font-size: 24px;
+        z-index: 5;
+      }
+
+      .date-chip::before {
+        content: "";
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        border: 4px solid var(--ink);
+        background: var(--lime);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1fr 270px;
+        gap: 26px;
+        align-items: start;
+      }
+
+      .title {
+        margin: 0;
+        display: grid;
+        gap: 20px;
+        font-size: 86px;
+        line-height: 0.96;
+        font-weight: 1000;
+        letter-spacing: 2px;
+        max-width: 920px;
+      }
+
+      .title .line {
+        display: block;
+      }
+
+      .side-card {
+        position: relative;
+        padding: 18px 20px 16px;
+        border: var(--outline) solid var(--ink);
+        border-radius: 28px;
+        background: var(--lime);
+        box-shadow: 16px 16px 0 var(--orange);
+        justify-self: start;
+        transform: translate(-74px, -72px) rotate(4deg);
+        display: grid;
+        gap: 8px;
+        z-index: 4;
+      }
+
+      .side-card .mini {
+        font-size: 20px;
+        line-height: 1;
+        font-weight: 900;
+      }
+
+      .side-card .mega {
+        font-size: 82px;
+        line-height: 0.88;
+        font-weight: 1000;
+        letter-spacing: -0.06em;
+      }
+
+      .side-card .label {
+        font-size: 28px;
+        line-height: 1.02;
+        font-weight: 1000;
+      }
+
+      .side-card .sub {
+        font-size: 18px;
+        line-height: 1.35;
+        font-weight: 800;
+      }
+
+      .side-foot {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        padding: 0 16px;
+        border-radius: 16px;
+        background: var(--soft-white);
+        font-size: 18px;
+      }
+
+      .summary {
+        position: relative;
+        top: -12px;
+        padding: 18px 22px;
+        border: var(--outline) solid var(--ink);
+        border-radius: 24px;
+        background: #fff;
+        box-shadow: 0 12px 0 var(--shadow-blue);
+        font-size: 28px;
+        line-height: 1.46;
+        font-weight: 800;
+      }
+
+      .main-grid {
+        display: grid;
+        grid-template-columns: 1fr 0.96fr;
+        gap: 18px;
+        min-height: 0;
+      }
+
+      .panel {
+        min-height: 0;
+        padding: 18px 18px 16px;
+        border: var(--outline) solid var(--ink);
+        border-radius: 26px;
+        background: rgba(255,255,255,0.95);
+        display: grid;
+        grid-template-rows: auto auto 1fr;
+        gap: 14px;
+      }
+
+      .panel h2 {
+        margin: 0;
+        font-size: 36px;
+        line-height: 1.05;
+        font-weight: 1000;
+      }
+
+      .hero-line {
+        display: flex;
+        align-items: end;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+
+      .hero-line strong {
+        font-size: 76px;
+        line-height: 0.9;
+        font-weight: 1000;
+        letter-spacing: -0.06em;
+      }
+
+      .hero-line span {
+        font-size: 28px;
+        line-height: 1.05;
+        font-weight: 1000;
+      }
+
+      .block-list {
+        display: grid;
+        gap: 12px;
+        align-content: start;
+      }
+
+      .block {
+        padding: 14px 16px;
+        border: 4px solid var(--ink);
+        border-radius: 18px;
+        display: grid;
+        gap: 6px;
+      }
+
+      .block.blue { background: var(--soft-blue); }
+      .block.blue2 { background: var(--soft-blue-2); }
+      .block.yellow { background: var(--soft-yellow); }
+      .block.green { background: var(--soft-green); }
+      .block.white { background: var(--soft-white); }
+
+      .block strong {
+        font-size: 21px;
+        line-height: 1.18;
+        font-weight: 1000;
+      }
+
+      .block span {
+        font-size: 16px;
+        line-height: 1.42;
+        font-weight: 800;
+      }
+
+      .badge-rail {
+        display: grid;
+        grid-template-columns: 1.08fr 1.04fr 0.88fr;
+        gap: 12px;
+      }
+
+      .badge {
+        min-height: 76px;
+        padding: 12px 16px;
+        border-radius: 18px;
+        display: grid;
+        align-content: center;
+        gap: 4px;
+      }
+
+      .badge.orange { background: var(--orange); color: #fffef9; }
+      .badge.yellow { background: #ffea3a; }
+      .badge.blue { background: #cfe4ff; }
+
+      .badge strong {
+        font-size: 18px;
+        line-height: 1.08;
+        font-weight: 1000;
+      }
+
+      .badge span {
+        font-size: 14px;
+        line-height: 1.25;
+        font-weight: 900;
+      }
+
+      .footer-stack {
+        display: grid;
+        gap: 10px;
+        transform: translateY(-10px);
+      }
+
+      .footer-note {
+        display: block;
+        padding: 10px 16px;
+        border: 4px solid var(--ink);
+        border-radius: 16px;
+        background: #cfe4ff;
+        font-size: 15px;
+        line-height: 1.35;
+        font-weight: 800;
+      }
+
+      .footer {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 16px;
+        align-items: end;
+      }
+
+      .contact-cluster {
+        display: grid;
+        grid-template-columns: repeat(2, 126px);
+        gap: 10px;
+      }
+
+      .code-slot,
+      .ip-slot {
+        display: grid;
+        gap: 6px;
+        justify-items: center;
+      }
+
+      .code-card,
+      .ip-card {
+        width: 126px;
+        height: 126px;
+        border: 4px solid var(--ink);
+        border-radius: 18px;
+        overflow: hidden;
+        background: #fff;
+      }
+
+      .code-card img,
+      .ip-card img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .slot-caption {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 34px;
+        padding: 0 10px;
+        border-radius: 999px;
+        background: var(--yellow);
+        font-size: 14px;
+      }
+
+      .slot-caption.ip { background: var(--lime); }
+    </style>
+  </head>
+  <body>
+    <main class="frame">
+      <div class="grid-badge">
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span>
+      </div>
+      <div class="grid-corner">
+        <span></span><span></span>
+        <span></span><span></span>
+      </div>
+
+      <section class="board-shell">
+        <div class="ear left"></div>
+        <div class="ear right"></div>
+
+        <div class="board-inner">
+          <div class="top-row">
+            <div class="tag-row">
+              <span class="tag">KKSTICKER</span>
+              <span class="tag lime">BOLD MODE</span>
+            </div>
+            <span class="date-chip">2026年04月01日</span>
+          </div>
+
+          <section class="hero">
+            <h1 class="title"><span class="line">把重点做成</span><span class="line">吉祥物贴纸白板</span></h1>
+
+            <div class="side-card">
+              <span class="mini">v0.2.0</span>
+              <span class="mega">任意</span>
+              <span class="label">亮点支持</span>
+              <span class="sub">标题、侧牌、摘要条和双栏卡片会被串成一张更有记忆点的信息白板。</span>
+              <span class="side-foot">3:4 Screenshot</span>
+            </div>
+          </section>
+
+          <section class="summary">
+            这套风格最狠的地方，不是单纯多几个色块，而是把“蓝网格背景”“吉祥物白板”“亮色贴纸牌”和“双栏模块讲解”真正串成一张图。
+          </section>
+
+          <section class="main-grid">
+            <section class="panel">
+              <h2>这套风格最值钱</h2>
+
+              <div class="hero-line">
+                <strong>白板</strong>
+                <span>先抓眼</span>
+              </div>
+
+              <div class="block-list">
+                <div class="block blue">
+                  <strong>吉祥物轮廓是第一记忆点</strong>
+                  <span>顶部白板耳朵和眼睛让它不是普通卡片墙，而是更像一张有角色感的封面板。</span>
+                </div>
+                <div class="block yellow">
+                  <strong>标题必须像封面词组</strong>
+                  <span>先把结论做大，再让读者去读下面的短卡，不要把最重要的信息埋进段落。</span>
+                </div>
+                <div class="block green">
+                  <strong>右上侧牌负责抬重点</strong>
+                  <span>版本号、关键数字、强判断和一句结论都适合塞进亮色贴纸牌。</span>
+                </div>
+                <div class="block blue2">
+                  <strong>双栏卡片负责消化信息量</strong>
+                  <span>左边讲最值钱的变化，右边讲玩法和适用场景，读起来比一整页长文稳得多。</span>
+                </div>
+              </div>
+            </section>
+
+            <section class="panel">
+              <h2>现在能怎么用</h2>
+
+              <div class="block-list">
+                <div class="block blue">
+                  <strong>工具更新公告</strong>
+                  <span>适合做版本变化、功能上新、配置扩展和“这次为什么值得试”的总结图。</span>
+                </div>
+                <div class="block yellow">
+                  <strong>项目亮点拆解</strong>
+                  <span>把一个仓库、一个产品或一个功能集合拆成几张短卡，既抓眼又方便扫读。</span>
+                </div>
+                <div class="block green">
+                  <strong>给 Agent 更顺手</strong>
+                  <span>摘要条先讲价值，侧牌再抬爆点，剩下的细节放进卡片，模型和读者都更容易对齐重点。</span>
+                </div>
+                <div class="block white">
+                  <strong>适合谁先试</strong>
+                  <span>做内容情报、自动化采集、项目总结、方法论介绍和亮点导览的人，都会先感受到这套结构的价值。</span>
+                </div>
+                <div class="block yellow">
+                  <strong>一句话理解</strong>
+                  <span>它像一张会卖萌的结构化海报，让更新、拆解和推荐同时更清楚也更好记。</span>
+                </div>
+              </div>
+            </section>
+          </section>
+
+          <section class="badge-rail">
+            <div class="badge orange">
+              <strong>亮点先抬头</strong>
+              <span>先让标题和侧牌抓住注意力</span>
+            </div>
+            <div class="badge yellow">
+              <strong>双栏更能装</strong>
+              <span>结构更稳，信息密度更高</span>
+            </div>
+            <div class="badge blue">
+              <strong>品牌区固定</strong>
+              <span>日期、二维码、IP 一直保留</span>
+            </div>
+          </section>
+
+          <footer class="footer">
+            <div class="footer-stack">
+              <span class="footer-note">来源：在这里放项目地址、文章来源或资料出处。</span>
+              <span class="footer-note">一句话建议：如果这页需要先抓人再讲清楚，这套风格通常比普通信息卡更合适。</span>
+            </div>
+
+            <div class="contact-cluster">
+              <div class="code-slot">
+                <span class="code-card"><img src="./contact-code.png" alt="合作交流二维码" /></span>
+                <span class="slot-caption">合作交流</span>
+              </div>
+              <div class="ip-slot">
+                <span class="ip-card"><img src="./kk-character.jpeg" alt="卡卡 IP 形象" /></span>
+                <span class="slot-caption ip">是卡卡呀</span>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

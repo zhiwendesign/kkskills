@@ -2,7 +2,7 @@
 
 `kkstyle-skills` 是一个面向支持 skill 的 agent 环境的海报技能集合仓库。它把文章、笔记、课程摘要、项目说明或推荐清单，转换成固定比例的 HTML 海报，并可继续截图导出为 PNG。
 
-当前仓库包含 `7` 个风格家族、共 `14` 个技能目录。每种风格都提供：
+当前仓库包含 `8` 个风格家族、共 `16` 个技能目录。每种风格都提供：
 
 - 标准版 `*-screenshot`
 - 柔和版 `*-noline-screenshot`
@@ -94,10 +94,18 @@ claude --plugin-dir ./plugins/kkstyle
 ./scripts/validate_claude_plugin.sh
 ```
 
+## 风格预览（3:4）
+
+![KKStyle 3:4 风格预览](./previews/style-preview-3x4.png)
+![KKStyle 3:4 风格预览 2](./previews/style-preview-3x4-2.png)
+
+为了把预览图完整展示出来，这里拆成了两张 `3:4` 预览图。两张图都使用统一的示例标题和标签基准，第一张从 `KKSticker` 开始。
+
 ## 风格总览
 
 | 风格 | 标准版 | `noline` 版 | 更适合的内容 |
 | --- | --- | --- | --- |
+| KKSticker | [kkstyle-kksticker-screenshot](./kkstyle-kksticker-screenshot) | [kkstyle-kksticker-noline-screenshot](./kkstyle-kksticker-noline-screenshot) | 蓝网格贴纸白板、工具更新、亮点拆解、双栏讲解 |
 | Class Notes | [kkstyle-class-notes-screenshot](./kkstyle-class-notes-screenshot) | [kkstyle-class-notes-noline-screenshot](./kkstyle-class-notes-noline-screenshot) | 课堂笔记、课程总结、学习资源、知识点整理 |
 | Diagram Board | [kkstyle-diagram-board-screenshot](./kkstyle-diagram-board-screenshot) | [kkstyle-diagram-board-noline-screenshot](./kkstyle-diagram-board-noline-screenshot) | 流程讲解、模块拆解、结构说明、工作流总结 |
 | Editorial | [kkstyle-editorial-screenshot](./kkstyle-editorial-screenshot) | [kkstyle-editorial-noline-screenshot](./kkstyle-editorial-noline-screenshot) | 杂志封面感摘要、观点表达、信息密集型导读 |
@@ -125,6 +133,10 @@ Use $kkstyle-diagram-board-screenshot to turn these notes into a 3:4 explainer p
 Use $kkstyle-scrapbook-noline-screenshot to make this feel like a warm scrapbook poster with softer boundaries.
 ```
 
+```text
+Use $kkstyle-kksticker-screenshot to turn these notes into a kksticker 3:4 poster with a mascot-like whiteboard silhouette, a top date sticker, and a bold highlight side card.
+```
+
 ### 2. 推荐输入格式
 
 ```text
@@ -149,6 +161,10 @@ Use $kkstyle-scrapbook-noline-screenshot to make this feel like a warm scrapbook
 
 ```text
 /kkstyle-diagram-board-screenshot 主题：Agent 工作流说明；结构：1. 输入 2. 处理 3. 输出
+```
+
+```text
+/kkstyle-kksticker-screenshot 主题：这次更新最值钱的点；结构：1. 变化亮点 2. 现在能怎么玩 3. 适合谁先试
 ```
 
 ## 本地截图导出

@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KKStyle 3:4 Preview 2</title>
+    <style>
+      :root {
+        --canvas-width: 1500px;
+        --canvas-height: 2000px;
+        --source-width: 1500;
+        --source-height: 2000;
+        --bg: #f4f7ff;
+        --paper: rgba(255, 255, 255, 0.9);
+        --ink: #243247;
+        --muted: #627085;
+        --line: #d7e3f6;
+        --accent: #2f78ff;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Inter", "PingFang SC", "Microsoft YaHei", sans-serif;
+      }
+
+      body {
+        display: grid;
+        place-items: center;
+      }
+
+      .frame {
+        width: var(--canvas-width);
+        height: var(--canvas-height);
+        padding: 84px;
+        background:
+          linear-gradient(180deg, rgba(47, 120, 255, 0.06) 0%, rgba(47, 120, 255, 0) 20%),
+          linear-gradient(90deg, rgba(47, 120, 255, 0.06) 1px, transparent 1px),
+          linear-gradient(rgba(47, 120, 255, 0.06) 1px, transparent 1px),
+          var(--bg);
+        background-size: auto, 36px 36px, 36px 36px, auto;
+      }
+
+      .sheet {
+        height: 100%;
+        padding: 18px;
+        border: 2px solid rgba(36, 50, 71, 0.08);
+        border-radius: 28px;
+        background: var(--paper);
+        box-shadow: 0 18px 50px rgba(47, 120, 255, 0.1);
+        display: grid;
+        grid-template-rows: auto auto 1fr;
+        gap: 10px;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        width: fit-content;
+        padding: 7px 11px;
+        border-radius: 999px;
+        background: #dfeeff;
+        color: #4c6180;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 1;
+      }
+
+      .eyebrow::before {
+        content: "";
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--accent);
+      }
+
+      .hero {
+        display: grid;
+        gap: 6px;
+      }
+
+      .hero h1 {
+        margin: 0;
+        font-size: 38px;
+        line-height: 1.02;
+        font-weight: 900;
+      }
+
+      .hero p {
+        margin: 0;
+        font-size: 17px;
+        line-height: 1.4;
+        color: var(--muted);
+        font-weight: 500;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .card {
+        padding: 8px;
+        border: 2px solid var(--line);
+        border-radius: 20px;
+        background: #ffffff;
+        display: grid;
+        grid-template-rows: auto auto auto;
+        gap: 6px;
+        align-content: start;
+        box-shadow: 0 10px 22px rgba(36, 50, 71, 0.05);
+      }
+
+      .card-title {
+        font-size: 24px;
+        line-height: 1.08;
+        font-weight: 800;
+      }
+
+      .poster {
+        width: 100%;
+        aspect-ratio: 3 / 4;
+        overflow: hidden;
+        border-radius: 16px;
+        border: 1px solid rgba(36, 50, 71, 0.08);
+        background: #f7f9ff;
+      }
+
+      .poster iframe {
+        width: calc(var(--source-width) * 1px);
+        height: calc(var(--source-height) * 1px);
+        border: 0;
+        display: block;
+        transform-origin: top left;
+        pointer-events: none;
+      }
+
+      .card-desc {
+        margin: 0;
+        font-size: 14px;
+        line-height: 1.3;
+        color: var(--muted);
+        font-weight: 500;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="frame">
+      <section class="sheet">
+        <div class="eyebrow">KKStyle Preview 2 / 2</div>
+
+        <section class="hero">
+          <h1>风格预览图（3:4）</h1>
+          <p>第二页继续展示另外 4 个标准版风格。</p>
+        </section>
+
+        <section class="grid">
+          <article class="card">
+            <strong class="card-title">Minimal Tech</strong>
+            <p class="card-desc">极简科技海报，发布说明和产品概览最顺手。</p>
+            <div class="poster">
+              <iframe src="../kkstyle-minimal-tech-screenshot/assets/minimal-tech-card-template.html" title="Minimal Tech"></iframe>
+            </div>
+          </article>
+
+          <article class="card">
+            <strong class="card-title">Poster Comic</strong>
+            <p class="card-desc">漫画爆点海报，情绪封面和热梗内容最顺手。</p>
+            <div class="poster">
+              <iframe src="../kkstyle-poster-comic-screenshot/assets/poster-comic-card-template.html" title="Poster Comic"></iframe>
+            </div>
+          </article>
+
+          <article class="card">
+            <strong class="card-title">Retro Pixel</strong>
+            <p class="card-desc">像素状态面板，状态总览和游戏化信息最顺手。</p>
+            <div class="poster">
+              <iframe src="../kkstyle-retro-pixel-screenshot/assets/retro-pixel-card-template.html" title="Retro Pixel"></iframe>
+            </div>
+          </article>
+
+          <article class="card">
+            <strong class="card-title">Scrapbook</strong>
+            <p class="card-desc">暖纸拼贴海报，推荐清单和生活方式内容最顺手。</p>
+            <div class="poster">
+              <iframe src="../kkstyle-scrapbook-screenshot/assets/scrapbook-card-template.html" title="Scrapbook"></iframe>
+            </div>
+          </article>
+        </section>
+      </section>
+    </main>
+
+    <script>
+      (() => {
+        const sourceWidth = 1500;
+        const sourceHeight = 2000;
+
+        function fitPreviews() {
+          document.querySelectorAll(".poster").forEach((poster) => {
+            const frame = poster.querySelector("iframe");
+            if (!frame) return;
+            const scale = Math.min(
+              poster.clientWidth / sourceWidth,
+              poster.clientHeight / sourceHeight
+            );
+            frame.style.transform = "scale(" + scale + ")";
+          });
+        }
+
+        window.addEventListener("load", fitPreviews);
+        window.addEventListener("resize", fitPreviews);
+      })();
+    </script>
+  </body>
+</html>

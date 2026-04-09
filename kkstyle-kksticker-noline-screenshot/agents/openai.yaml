@@ -1,0 +1,4 @@
+interface:
+  display_name: "KKStyle KKSticker No-Line Screenshot"
+  short_description: "No-line KKSticker 3:4 posters with mascot board, date, QR, IP, and screenshot output"
+  default_prompt: "Use $kkstyle-kksticker-noline-screenshot to turn my notes into a no-line kksticker 3:4 poster with a mascot-like whiteboard silhouette, a top date sticker, a bright highlight side card, soft card boundaries, a fixed contact QR block, a fixed Kaka IP slot, and optional PNG rendering."

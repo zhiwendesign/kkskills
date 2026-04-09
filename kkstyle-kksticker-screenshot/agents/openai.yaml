@@ -1,0 +1,4 @@
+interface:
+  display_name: "KKStyle KKSticker Screenshot"
+  short_description: "KKSticker 3:4 posters with mascot board, date, QR, IP, and screenshot output"
+  default_prompt: "Use $kkstyle-kksticker-screenshot to turn my notes into a kksticker 3:4 poster with a mascot-like whiteboard silhouette, a top date sticker, a bright highlight side card, a fixed contact QR block, a fixed Kaka IP slot, and optional PNG rendering."
